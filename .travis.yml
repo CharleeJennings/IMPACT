@@ -6,6 +6,7 @@ cache:
   - node_modules
 before_install:
 
+-npm i travis
 
 script:
 - npm start
