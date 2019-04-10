@@ -9,7 +9,7 @@ before_install:
 -npm i travis
 
 script:
-- npm start
+- npm test
 deploy:
   provider: heroku
   api_key:
