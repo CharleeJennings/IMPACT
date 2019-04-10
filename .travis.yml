@@ -8,6 +8,7 @@ before_install:
 - npm i travis webpack
 script:
 - npm test
+- npm install
 deploy:
   provider: heroku
   api_key:
