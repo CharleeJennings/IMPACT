@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Link changes the class when hovered 1`] = `
+<div
+  className="MuiGrid-container-8 MuiGrid-justify-xs-center-25 TextFields-container-3"
+>
+  <h5
+    className="MuiTypography-root-105 MuiTypography-h5-121 TextFields-header-7"
+  >
+    IMPACT THE YOUTH
+  </h5>
+  <form
+    action="/login"
+    autoComplete="off"
+    method="post"
+    noValidate={true}
+  >
+    <div
+      className="MuiGrid-container-8 MuiGrid-direction-xs-column-11 MuiGrid-justify-xs-center-25"
+    >
+      <div
+        className="MuiPaper-root-141 MuiPaper-elevation1-144 MuiPaper-rounded-142 MuiCard-root-140 TextFields-card-2"
+      >
+        <div
+          className="MuiGrid-item-9"
+        >
+          <div
+            className="MuiFormControl-root-168 TextFields-textField-4"
+          >
+            <label
+              className="MuiFormLabel-root-183 MuiInputLabel-root-172 MuiInputLabel-formControl-177 MuiInputLabel-animated-180"
+              data-shrink={false}
+              htmlFor="standard-name"
+            >
+              Name
+            </label>
+            <div
+              className="MuiInputBase-root-203 MuiInput-root-190 MuiInput-underline-194 MuiInputBase-formControl-204 MuiInput-formControl-191"
+              onClick={[Function]}
+            >
+              <input
+                aria-invalid={false}
+                className="MuiInputBase-input-213 MuiInput-input-198"
+                disabled={false}
+                id="standard-name"
+                name="username"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={false}
+                type="text"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-item-9"
+        >
+          <div
+            className="MuiFormControl-root-168 TextFields-textField-4"
+          >
+            <label
+              className="MuiFormLabel-root-183 MuiInputLabel-root-172 MuiInputLabel-formControl-177 MuiInputLabel-animated-180"
+              data-shrink={false}
+              htmlFor="standard-name"
+            >
+              Password
+            </label>
+            <div
+              className="MuiInputBase-root-203 MuiInput-root-190 MuiInput-underline-194 MuiInputBase-formControl-204 MuiInput-formControl-191"
+              onClick={[Function]}
+            >
+              <input
+                aria-invalid={false}
+                className="MuiInputBase-input-213 MuiInput-input-198"
+                disabled={false}
+                id="standard-name"
+                name="password"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={false}
+                type="text"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      className="MuiButtonBase-root-246 MuiButton-root-220 MuiButton-contained-231 MuiButton-containedPrimary-232 MuiButton-raised-234 MuiButton-raisedPrimary-235 TextFields-button-1"
+      disabled={false}
+      onBlur={[Function]}
+      onContextMenu={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      tabIndex="0"
+      type="submit"
+    >
+      <span
+        className="MuiButton-label-221"
+      >
+        Log In
+      </span>
+      <span
+        className="MuiTouchRipple-root-249"
+      />
+    </button>
+    <a
+      className="MuiButtonBase-root-246 MuiButton-root-220 MuiButton-contained-231 MuiButton-containedPrimary-232 MuiButton-raised-234 MuiButton-raisedPrimary-235 TextFields-button-1"
+      href="/signup"
+      onBlur={[Function]}
+      onContextMenu={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      role="button"
+      tabIndex="0"
+    >
+      <span
+        className="MuiButton-label-221"
+      >
+        Sign up
+      </span>
+      <span
+        className="MuiTouchRipple-root-249"
+      />
+    </a>
+  </form>
+</div>
+`;

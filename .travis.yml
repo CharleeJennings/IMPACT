@@ -1,0 +1,20 @@
+langauge: node_js
+node_js:
+- stable
+cache:
+  directories:
+  - node_modules
+before_install:
+- npm update
+- npm i nodemon webpack webpack-cli webpack-node-externals babel-loader image-webpack-loader
+  file-loader css-loader ignore-loader style-loader babel-core babel-plugin-transform-object-rest-spread
+  babel-preset-env babel-preset-react-app mini-css-extract-plugin
+script:
+- npm test
+deploy:
+  provider: heroku
+  api_key:
+    secure: LJkvjwdfsuvHOBgk21oaPlv5w8BfPxFjZAI0XcWPIkrTcYeOYWufULCw9QxovJOD480WHRUjUaQE9uW8+DeOhRdGmxt4ioeZXzuXtAvtGlbhsgRQJFPCFF9dx0c9FHxK++N/b3nnBZ4aLIxM/TTyuvLBL9f6S1ZDOh2pfaO6bykA2P8o5cSnaF31zp4ZCHlDDcswle0OrJE9RfgI+iqrLNgz181+18vmB30sXLee5mIidCKp+W01cpmE7CDx8kW7TqHmGo8MjWfcbxYhhuoj91vyJpJmDI1xeJhaFyXmFLQ4OOUm+qXf9rRNKahz5ECDjB3rHbFy1KeSEMJsLvo9cQPZUTvV/XOTrNArFpCrX1VzXKcefcYWpQOf+M8ZIbVEV6DGlxdPyHD9MFDESbEFqabYvS5GS7KinBXO7eSEg9HhQzScSZj3zqGQuVGZwJu5KU1BPCbRT9omYipImO99L7le9vnhp/P6SQuXcB1hi6DiZNVJCzANavBNrOzl0QEFTi+cSOWMmlbVmMM2EM8iNFsHpjkei4fkmIxU1zAarODFtEQ7yiJRTexrvls8DrOqqte05si44HvzPA7cCZE2+pkC/6uadrb+A93NhKUcC8ljTPryAHYkmd25Iuhl8aRX4hvYgF8F+lb1oLeu1zP96YzqxYM0VJFzM+ZpwLyZ5jY=
+  app: nishaskcreations
+  on:
+    repo: CharleeJennings/NishasCreations
