@@ -3,7 +3,7 @@ var webpack = require ('webpack')
 var nodeExternals = require ('webpack-node-externals')
 var extendRequire = require("isomorphic-loader/lib/extend-require");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
+require("babel/polyfill");
 
 var browserConfig =
 {
@@ -75,6 +75,11 @@ var browserConfig =
     })
 	]
 }
+
+
+
+
+
 var serverConfig = {
 	//
 	// Proxy request to server from React Router to Express
