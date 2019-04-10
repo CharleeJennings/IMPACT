@@ -4,7 +4,7 @@ node_js:
 cache:
   directories:
   - node_modules
-before_install:
+script:
 - npm test
 deploy:
   provider: heroku
