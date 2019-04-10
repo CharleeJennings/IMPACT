@@ -1,7 +1,7 @@
 import Login from './components/Login'
-import Contact from './components/Contact'
+
 import SignUp from './components/Signup'
-import TextFields from './components/Login'
+
 import Profile from './components/Profile'
 
 const routes = [

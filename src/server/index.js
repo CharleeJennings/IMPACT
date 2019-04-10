@@ -5,7 +5,7 @@ import routes from '../shared/routes'
 import App from '../shared/App';
 import React from 'react'
 import mongoose from 'mongoose';
-import { typeDefs, resolvers, User, UserSchema }  from './mongodb/graphQL/graphQL'
+import { typeDefs, resolvers, User, UserSchema }  from './mongodb/graphQL'
 import {GraphQLServer} from 'graphql-yoga';
 import cors from 'cors'
 import 'cross-fetch/polyfill';
@@ -124,7 +124,6 @@ const generateClassName = createGenerateClassName();
 
 const activeRoute = routes.find((route) => matchPath(req.url, route)) || {}
 const client = new ApolloClient({
-		ssrMode: true,
 		// Remember that this is the interface the SSR server will use to connect to the
 		// API server, so we need to ensure it isn't firewalled, etc
 		link: new SchemaLink({UserSchema}),

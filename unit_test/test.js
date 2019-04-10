@@ -1,5 +1,5 @@
 
-import Login from './components/Login'
+import Login from '../src/shared/components/Login'
 import renderer from 'react-test-renderer';
 import React from 'react';
 
