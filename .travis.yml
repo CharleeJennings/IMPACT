@@ -6,10 +6,9 @@ cache:
   - node_modules
 before_install:
 
-- npm i jest
 
 script:
-- npm test
+- npm start
 deploy:
   provider: heroku
   api_key:
