@@ -5,10 +5,9 @@ cache:
   directories:
   - node_modules
 before_install:
-- npm update
 - npm i nodemon webpack webpack-cli webpack-node-externals babel-loader image-webpack-loader
   file-loader css-loader ignore-loader style-loader babel-core babel-plugin-transform-object-rest-spread
-  babel-preset-env babel-preset-react-app mini-css-extract-plugin
+  babel-preset-env babel-preset-react-app mini-css-extract-plugin @babel/plugin-proposal-object-rest-spread @babel/polyfill @babel/preset-env @babel/preset-react
 script:
 - npm test
 deploy:
