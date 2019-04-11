@@ -32,44 +32,6 @@ container:
 })
 
 
-const field = [
-
-{
-  id: 1,
-  name: 'firstname' ,
-  label: 'First name',
-},
-{
-  id: 2,
-  name: 'lastname',
-  label:'Last name',
-},
-{
-  id: 3,
-  name: 'email',
-  label: 'Email',
-  W: true
-},
-{
-  id: 4,
-  name: 'cemail',
-  label: 'Confirm Email',
-  W: true,
-},
-{
-  id: 5,
-  name: 'password',
-  label: 'Password'
-},
-{
-  id: 6,
-  name: 'cpassword',
-  label: 'Confirm Password',
-
-}
-
-]
-
 const ADD_USER = gql`
 
 mutation(  $firstname: String!, $lastname: String!, $email: String!, $password: String!)
@@ -81,6 +43,12 @@ mutation(  $firstname: String!, $lastname: String!, $email: String!, $password: 
 }
 `;
 
+function  Compare( field1, field2 )
+{
+  if (field1 === field2 )
+    return true
+  return false
+}
 
 class SignUp extends React.Component
 {
@@ -89,6 +57,9 @@ class SignUp extends React.Component
     super(props)
     this.state = {firstname: null , lastname: null, email: null, password: null }
   }
+
+
+
 
   handleChange(event)
   {
@@ -111,7 +82,38 @@ class SignUp extends React.Component
     <form method='post'>
     <Card className= {classes.card}>
     <Grid container direction='column'>
-    {field.map((field, i)=>{return <Grid key={field.id} item><TextField fullWidth={field.W} label={field.label} name={field.name} value={this.state.name} onChange={this.handleChange.bind(this)}/> </Grid>})}
+
+    <Grid item>
+    <TextField name = "firstname" label = "First Name" onChange={this.handleChange}/>
+    </Grid>
+
+    <Grid item>
+    <TextField name = "lastname" label = "Last Name" onChange={this.handleChange}/>
+    </Grid>
+
+    <Grid item>
+    <TextField name = "usertname" label = "User Name" onChange={this.handleChange}/>
+
+    </Grid>
+
+    <Grid item>
+    <TextField name = "email" label = "Email" onChange={this.handleChange}/>
+    </Grid>
+
+    <Grid item>
+    <TextField name = "emailC" label = "Confirm Email" onChange={this.handleChange}/>
+
+    </Grid>
+
+    <Grid item>
+    <TextField name = "password" label = "Password" onChange={this.handleChange}/>
+
+    </Grid>
+
+    <Grid item>
+    <TextField name = "firstname" label = "Confirm Password" onChange={this.handleChange}/>
+    </Grid>
+
     </Grid>
     </Card>
     <Button variant='contained' onClick= {() =>this.props.createUser({ variables:{firstname: this.state.firstname, lastname : this.state.lastname , email: this.state.email, password: this.state.password}})} className = {classes.button}>

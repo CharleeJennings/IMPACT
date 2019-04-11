@@ -10,7 +10,7 @@ import {GraphQLServer} from 'graphql-yoga';
 import cors from 'cors'
 import 'cross-fetch/polyfill';
 import { ApolloProvider } from 'react-apollo';
-import ApolloClient from "apollo-boost";
+import ApolloClient from "apollo-client";
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from "apollo-cache-inmemory";
 import session from 'express-session'
@@ -124,6 +124,7 @@ const generateClassName = createGenerateClassName();
 
 const activeRoute = routes.find((route) => matchPath(req.url, route)) || {}
 const client = new ApolloClient({
+  ssrMode: true,
 		// Remember that this is the interface the SSR server will use to connect to the
 		// API server, so we need to ensure it isn't firewalled, etc
 		link: new SchemaLink({UserSchema}),
