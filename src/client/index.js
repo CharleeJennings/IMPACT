@@ -30,7 +30,6 @@ class Main extends React.Component {
 }
 
 const theme = createMuiTheme({
-
   palette: {
     primary: blue,
     secondary: {main: '#FFFFFF'},
@@ -40,7 +39,7 @@ const theme = createMuiTheme({
   typography:
   {
     useNextVariants: true,
-    fontFamily: ['Baloo Chettan', 'Raleway'].join(','),
+    fontFamily: ['Baloo Chettan','Raleway'].join(','),
     h5:
     {
       fontFamily: 'Baloo Chettan'
