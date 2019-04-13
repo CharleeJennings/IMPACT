@@ -104,7 +104,7 @@ server.express.get( '*', (req, res ,next) => {
    // Create a theme instance.
    const theme = createMuiTheme({
      palette: {
-       primary: blue,
+       primary: red,
 			 secondary: {main: '#FFFFFF'},
        accent: red,
        type: 'light',
@@ -113,11 +113,6 @@ server.express.get( '*', (req, res ,next) => {
 		 {
        useNextVariants: true,
 			 fontFamily: ['Baloo Chettan','Raleway'].join(','),
-       h5:
-       {
-         fontFamily: 'Baloo Chettan'
-
-       }
 		 }
    });
 const generateClassName = createGenerateClassName();
