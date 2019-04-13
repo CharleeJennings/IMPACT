@@ -43,11 +43,17 @@ mutation(  $firstname: String!, $lastname: String!, $email: String!, $password: 
 }
 `;
 
-function  Compare( field1, field2 )
+function Compare(field1, field2)
 {
   if (field1 === field2 )
+  {
     return true
-  return false
+  }
+ else
+ {
+    return false
+ }
+
 }
 
 class SignUp extends React.Component
@@ -55,7 +61,7 @@ class SignUp extends React.Component
   constructor(props)
   {
     super(props)
-    this.state = {firstname: null , lastname: null, email: null, password: null }
+    this.state = {firstname: null , lastname: null, email: null, password: null, emailC: '' , passwordC: '' }
   }
 
 
@@ -64,11 +70,30 @@ class SignUp extends React.Component
   handleChange(event)
   {
     const name = event.target.name
+
     this.setState({
       [name] : event.target.value,
     })
+
+  if (name == 'emailC')
+  {
+    if (Compare(event.target.value , this.state.email))
+    {
+
+    }
+    else
+    {
+
+    }
   }
 
+
+  }
+
+  register = () =>
+  {
+    this.props.createUser({ variables:{firstname: this.state.firstname, lastname : this.state.lastname , email: this.state.email, password: this.state.password}  })
+  };
 
 
 
@@ -84,39 +109,39 @@ class SignUp extends React.Component
     <Grid container direction='column'>
 
     <Grid item>
-    <TextField name = "firstname" label = "First Name" onChange={this.handleChange}/>
+    <TextField name = "firstname" label = "First Name" onChange={this.handleChange.bind(this)} value={this.state.name}/>
     </Grid>
 
     <Grid item>
-    <TextField name = "lastname" label = "Last Name" onChange={this.handleChange}/>
+    <TextField name = "lastname" label = "Last Name" onChange={this.handleChange.bind(this)} value={this.state.name}/>
     </Grid>
 
     <Grid item>
-    <TextField name = "usertname" label = "User Name" onChange={this.handleChange}/>
-
-    </Grid>
-
-    <Grid item>
-    <TextField name = "email" label = "Email" onChange={this.handleChange}/>
-    </Grid>
-
-    <Grid item>
-    <TextField name = "emailC" label = "Confirm Email" onChange={this.handleChange}/>
+    <TextField name = "usertname" label = "User Name" onChange={this.handleChange.bind(this)} value={this.state.name}/>
 
     </Grid>
 
     <Grid item>
-    <TextField name = "password" label = "Password" onChange={this.handleChange}/>
+    <TextField name = "email" label = "Email" onChange={this.handleChange.bind(this)} value={this.state.name}/>
+    </Grid>
+
+    <Grid item>
+    <TextField name = "emailC" label = "Confirm Email" onChange={this.handleChange.bind(this)} value={this.state.name}/>
 
     </Grid>
 
     <Grid item>
-    <TextField name = "firstname" label = "Confirm Password" onChange={this.handleChange}/>
+    <TextField name = "password" label = "Password" onChange={this.handleChange.bind(this)} value={this.state.name}/>
+
+    </Grid>
+
+    <Grid item>
+    <TextField name = "passwordC" label = "Confirm Password" onChange={this.handleChange.bind(this)} value={this.state.name}/>
     </Grid>
 
     </Grid>
     </Card>
-    <Button variant='contained' onClick= {() =>this.props.createUser({ variables:{firstname: this.state.firstname, lastname : this.state.lastname , email: this.state.email, password: this.state.password}})} className = {classes.button}>
+    <Button variant='contained' onClick= {() => this.register() } className = {classes.button}>
     Submit
     </Button>
     </form>
