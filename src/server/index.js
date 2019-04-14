@@ -146,6 +146,7 @@ const markup = renderToString(
 		<html>
 			<head>
 			<meta name="viewport" content="width=device-width, initial-scale=1">
+      <style id="jss-server-side">${css}</style>
 			<title> I.M.P.A.C.T </title>
       <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
 			<link rel="stylesheet" type="text/css" href="/main.css" media="screen" />
@@ -154,7 +155,7 @@ const markup = renderToString(
 			</head>
 			<body>
 				<div id = 'app'>${markup}</div>
-				<style id="jss-server-side">${css}</style>
+
 			</body>
 
 		</html>`)

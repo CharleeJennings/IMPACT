@@ -3,3 +3,5 @@
 .DS_Store
 
 .DS_Store?
+
+/unit_test/__snapshots__
