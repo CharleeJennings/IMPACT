@@ -69,9 +69,7 @@ handleChange(event)
 
     return (
         <Grid container justify='center' className = {classes.container}>
-        <Typography variant='h5' className={classes.header}>
-        IMPACT THE YOUTH
-        </Typography>
+      
         <form noValidate autoComplete="off" method="post" action="/login">
         <Grid container direction='column' justify='center'>
         <Card className={classes.card} >

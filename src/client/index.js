@@ -1,7 +1,7 @@
 import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { hydrate } from 'react-dom';
-import ApolloClient from "apollo-boost";
+import ApolloClient from "apollo-client";
 import App from '../shared/App.js';
 import {BrowserRouter} from 'react-router-dom';
 import JssProvider from 'react-jss/lib/JssProvider';
