@@ -4,11 +4,6 @@ exports[`Link changes the class when hovered 1`] = `
 <div
   className="MuiGrid-container-8 MuiGrid-justify-xs-center-25 TextFields-container-3"
 >
-  <h5
-    className="MuiTypography-root-105 MuiTypography-h5-121 TextFields-header-7"
-  >
-    IMPACT THE YOUTH
-  </h5>
   <form
     action="/login"
     autoComplete="off"
@@ -19,28 +14,28 @@ exports[`Link changes the class when hovered 1`] = `
       className="MuiGrid-container-8 MuiGrid-direction-xs-column-11 MuiGrid-justify-xs-center-25"
     >
       <div
-        className="MuiPaper-root-141 MuiPaper-elevation1-144 MuiPaper-rounded-142 MuiCard-root-140 TextFields-card-2"
+        className="MuiPaper-root-106 MuiPaper-elevation1-109 MuiPaper-rounded-107 MuiCard-root-105 TextFields-card-2"
       >
         <div
           className="MuiGrid-item-9"
         >
           <div
-            className="MuiFormControl-root-168 TextFields-textField-4"
+            className="MuiFormControl-root-133 TextFields-textField-4"
           >
             <label
-              className="MuiFormLabel-root-183 MuiInputLabel-root-172 MuiInputLabel-formControl-177 MuiInputLabel-animated-180"
+              className="MuiFormLabel-root-148 MuiInputLabel-root-137 MuiInputLabel-formControl-142 MuiInputLabel-animated-145"
               data-shrink={false}
               htmlFor="standard-name"
             >
               Name
             </label>
             <div
-              className="MuiInputBase-root-203 MuiInput-root-190 MuiInput-underline-194 MuiInputBase-formControl-204 MuiInput-formControl-191"
+              className="MuiInputBase-root-168 MuiInput-root-155 MuiInput-underline-159 MuiInputBase-formControl-169 MuiInput-formControl-156"
               onClick={[Function]}
             >
               <input
                 aria-invalid={false}
-                className="MuiInputBase-input-213 MuiInput-input-198"
+                className="MuiInputBase-input-178 MuiInput-input-163"
                 disabled={false}
                 id="standard-name"
                 name="username"
@@ -57,22 +52,22 @@ exports[`Link changes the class when hovered 1`] = `
           className="MuiGrid-item-9"
         >
           <div
-            className="MuiFormControl-root-168 TextFields-textField-4"
+            className="MuiFormControl-root-133 TextFields-textField-4"
           >
             <label
-              className="MuiFormLabel-root-183 MuiInputLabel-root-172 MuiInputLabel-formControl-177 MuiInputLabel-animated-180"
+              className="MuiFormLabel-root-148 MuiInputLabel-root-137 MuiInputLabel-formControl-142 MuiInputLabel-animated-145"
               data-shrink={false}
               htmlFor="standard-name"
             >
               Password
             </label>
             <div
-              className="MuiInputBase-root-203 MuiInput-root-190 MuiInput-underline-194 MuiInputBase-formControl-204 MuiInput-formControl-191"
+              className="MuiInputBase-root-168 MuiInput-root-155 MuiInput-underline-159 MuiInputBase-formControl-169 MuiInput-formControl-156"
               onClick={[Function]}
             >
               <input
                 aria-invalid={false}
-                className="MuiInputBase-input-213 MuiInput-input-198"
+                className="MuiInputBase-input-178 MuiInput-input-163"
                 disabled={false}
                 id="standard-name"
                 name="password"
@@ -88,7 +83,7 @@ exports[`Link changes the class when hovered 1`] = `
       </div>
     </div>
     <button
-      className="MuiButtonBase-root-246 MuiButton-root-220 MuiButton-contained-231 MuiButton-containedPrimary-232 MuiButton-raised-234 MuiButton-raisedPrimary-235 TextFields-button-1"
+      className="MuiButtonBase-root-211 MuiButton-root-185 MuiButton-contained-196 MuiButton-containedPrimary-197 MuiButton-raised-199 MuiButton-raisedPrimary-200 TextFields-button-1"
       disabled={false}
       onBlur={[Function]}
       onContextMenu={[Function]}
@@ -105,16 +100,16 @@ exports[`Link changes the class when hovered 1`] = `
       type="submit"
     >
       <span
-        className="MuiButton-label-221"
+        className="MuiButton-label-186"
       >
         Log In
       </span>
       <span
-        className="MuiTouchRipple-root-249"
+        className="MuiTouchRipple-root-214"
       />
     </button>
     <a
-      className="MuiButtonBase-root-246 MuiButton-root-220 MuiButton-contained-231 MuiButton-containedPrimary-232 MuiButton-raised-234 MuiButton-raisedPrimary-235 TextFields-button-1"
+      className="MuiButtonBase-root-211 MuiButton-root-185 MuiButton-contained-196 MuiButton-containedPrimary-197 MuiButton-raised-199 MuiButton-raisedPrimary-200 TextFields-button-1"
       href="/signup"
       onBlur={[Function]}
       onContextMenu={[Function]}
@@ -131,12 +126,12 @@ exports[`Link changes the class when hovered 1`] = `
       tabIndex="0"
     >
       <span
-        className="MuiButton-label-221"
+        className="MuiButton-label-186"
       >
         Sign up
       </span>
       <span
-        className="MuiTouchRipple-root-249"
+        className="MuiTouchRipple-root-214"
       />
     </a>
   </form>
