@@ -14,7 +14,8 @@
     ],
     "plugins": [
       "@babel/plugin-proposal-object-rest-spread",
-      "@babel/plugin-proposal-class-properties"
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-proposal-export-default-from"
     ]
   },
   "jest": {},
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
@@ -43,6 +45,7 @@
     "mini-css-extract-plugin": "^0.4.5",
     "react-test-renderer": "^16.8.6",
     "style-loader": "^0.22.1",
+    "supertest": "^4.0.2",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.2.0",
     "webpack-node-externals": "^1.7.2"

@@ -10,7 +10,7 @@ import {GraphQLServer} from 'graphql-yoga';
 import cors from 'cors'
 import 'cross-fetch/polyfill';
 import { ApolloProvider } from 'react-apollo';
-import ApolloClient from "apollo-client";
+import ApolloClient from "apollo-boost";
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from "apollo-cache-inmemory";
 import session from 'express-session'
@@ -115,6 +115,7 @@ server.express.get( '*', (req, res ,next) => {
 			 fontFamily: ['Raleway'].join(','),
 		 }
    });
+
 const generateClassName = createGenerateClassName();
 
 const activeRoute = routes.find((route) => matchPath(req.url, route)) || {}
