@@ -112,7 +112,7 @@ server.express.get( '*', (req, res ,next) => {
 		 typography:
 		 {
        useNextVariants: true,
-			 fontFamily: ['Baloo Chettan','Raleway'].join(','),
+			 fontFamily: ['Raleway'].join(','),
 		 }
    });
 const generateClassName = createGenerateClassName();
