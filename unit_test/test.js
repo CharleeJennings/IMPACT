@@ -17,9 +17,3 @@ test('Link changes the class when hovered', () => {
 
 
 });
-
-describe('GET ', function() {
-  it('responds with json', function(done) {
-console.log('test');
-  });
-});
