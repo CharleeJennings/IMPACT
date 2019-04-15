@@ -150,7 +150,6 @@ const markup = renderToString(
       <style id="jss-server-side">${css}</style>
 			<title> I.M.P.A.C.T </title>
       <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
-			<link rel="stylesheet" type="text/css" href="/main.css" media="screen" />
 			<script src = '/bundle.js' defer> </script>
 			<script>window.__INITIAL_DATA__ = ${serialize(req.session)} </script>
 			</head>
