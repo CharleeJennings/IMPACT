@@ -32,7 +32,7 @@ import red from '@material-ui/core/colors/red';
 import purple from '@material-ui/core/colors/purple';
 
 
-
+import bcrypt from 'bcrypt';
 
 
 
@@ -112,7 +112,7 @@ server.express.get( '*', (req, res ,next) => {
 		 typography:
 		 {
        useNextVariants: true,
-			 fontFamily: ['Raleway'].join(','),
+			 fontFamily: ['Baloo Chettan','Raleway'].join(','),
 		 }
    });
 

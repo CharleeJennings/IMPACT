@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-
+import bcrypt from 'bcrypt';
 
 
 const typeDefs = `
@@ -40,7 +40,6 @@ const UserSchema =mongoose.Schema({
 
 
 
-
 		UserSchema.methods.validPassword = function( pwd ) {
 			    return ( this.password === pwd );
 			};
@@ -61,6 +60,7 @@ const User = mongoose.model("Users" , UserSchema );
 		Mutation:
 		{
 			createUser: async (_ , {firstname, lastname,email , password}) => {
+				
 				const user = new User ({firstname ,lastname, email , password});
 				 await user.save();
 				return user;

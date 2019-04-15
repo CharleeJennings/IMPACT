@@ -40,7 +40,7 @@ const theme = createMuiTheme({
   typography:
   {
     useNextVariants: true,
-    fontFamily: ['Raleway'].join(','),
+    fontFamily: ['Baloo Chettan','Raleway'].join(','),
   }
 });
 

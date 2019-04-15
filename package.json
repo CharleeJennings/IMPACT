@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --updateSnapshot",
     "start": "webpack -w & nodemon server.js"
   },
   "babel": {
@@ -61,6 +61,7 @@
     "apollo-link-schema": "^1.1.4",
     "asset-require-hook": "^1.2.0",
     "axios": "^0.18.0",
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.2.1",
     "connect-flash": "^0.1.1",
