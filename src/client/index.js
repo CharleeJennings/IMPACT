@@ -19,7 +19,7 @@ const client = new ApolloClient({});
 class Main extends React.Component {
   // Remove the server-side injected CSS.
 
-   }
+  
   render() {
     return <App />
   }
