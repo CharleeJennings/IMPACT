@@ -4,8 +4,6 @@
 
 .DS_Store?
 
-/unit_test/__snapshots__
+/unit_test/__snapshots__/
 
-/public/bundle.js
-
-server.js
+**/public/bundle.js
