@@ -33,10 +33,17 @@ class Main extends React.Component {
 const theme = createMuiTheme({
   palette: {
     primary: red,
+    secondary: {main: '#FFFFFF'},
     accent: red,
     type: 'light',
   },
+  typography:
+  {
+    useNextVariants: true,
+    fontFamily: ['Raleway'].join(','),
+  }
 });
+
 
 
 
