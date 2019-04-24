@@ -11,20 +11,21 @@ import Grid from '@material-ui/core/Grid'
 
 
 
+
 const styles = theme => ({
 
   button: {
       margin: theme.spacing.unit,
     },
   card: {
-   minWidth: 275,
+   minWidth: 205,
    width: 300,
    padding: 50,
  },
 container:
 {
   position: 'relative',
-  top:300,
+  top: 200,
 },
   textField: {
 
@@ -37,9 +38,17 @@ container:
   },
   header:
   {
-    position: 'absolute',
-    top: -100,
+
+    fontSize: 30,
   },
+
+  tree:
+  {
+    width: 250,
+    postion: 'relative',
+    height:250,
+
+  }
 });
 
 
@@ -68,8 +77,13 @@ handleChange(event)
     const { classes } = this.props;
 
     return (
-        <Grid container justify='center' className = {classes.container}>
-
+        <Grid container direction= "column" justify="space-evenly" alignItems="center" className = {classes.container} >
+<Grid item>
+        <Typography className = {classes.header}> IMPACT the next Generation </Typography>
+        </Grid>
+<Grid item>
+        <img src = {'./images/Tree.svg'} className= {classes.tree}/>
+</Grid>
         <form noValidate autoComplete="off" method="post" action="/login">
         <Grid container direction='column' justify='center'>
         <Card className={classes.card} >
@@ -81,7 +95,7 @@ handleChange(event)
           className={classes.textField}
           value={this.state.name}
           onChange={this.handleChange.bind(this)}
-
+          autoFocus
         />
         </Grid>
         <Grid item>

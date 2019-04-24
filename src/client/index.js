@@ -32,7 +32,7 @@ class Main extends React.Component {
 
 const theme = createMuiTheme({
   palette: {
-    primary: red,
+    primary: blue,
     secondary: {main: '#FFFFFF'},
     accent: red,
     type: 'light',

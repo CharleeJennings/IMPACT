@@ -1,5 +1,18 @@
 import React from 'react'
+import { withStyles } from '@material-ui/core/styles';
 
+
+const style = theme => ({
+
+container:
+{
+
+},
+
+
+
+
+})
 
 
 class Profile extends React.Component {
@@ -23,7 +36,7 @@ constructor(props)
   render()
 
 	 {
-		return(<h1> Hello worl.d </h1>);
+		return(<h1></h1>);
   }
 }
 

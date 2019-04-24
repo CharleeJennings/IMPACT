@@ -7,9 +7,21 @@ import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid'
 import gql from 'graphql-tag'
 import {graphql} from 'react-apollo'
+import red from '@material-ui/core/colors/red';
+
 
 const styles = theme => ({
 
+  cssLabel: {
+    '&$cssFocused': {
+      color: red[500],
+    },
+  },
+  cssUnderline: {
+   '&:after': {
+     borderBottomColor: red[500],
+   },
+ },
 card:
 {
   minWidth: 275,
@@ -83,7 +95,7 @@ class SignUp extends React.Component
     }
     else
     {
-      
+
     }
   }
 
@@ -92,6 +104,7 @@ class SignUp extends React.Component
 
   register = () =>
   {
+
     this.props.createUser({ variables:{firstname: this.state.firstname, lastname : this.state.lastname , email: this.state.email, password: this.state.password}  })
   };
 
@@ -109,7 +122,7 @@ class SignUp extends React.Component
     <Grid container direction='column'>
 
     <Grid item>
-    <TextField name = "firstname" label = "First Name" onChange={this.handleChange.bind(this)} value={this.state.name}/>
+    <TextField name = "firstname" label = "First Name" onChange={this.handleChange.bind(this)} value={this.state.name} autoFocus/>
     </Grid>
 
     <Grid item>
@@ -126,7 +139,9 @@ class SignUp extends React.Component
     </Grid>
 
     <Grid item>
-    <TextField name = "emailC" label = "Confirm Email" onChange={this.handleChange.bind(this)} value={this.state.name}/>
+    <TextField name = "emailC" label = "Confirm Email" onChange={this.handleChange.bind(this)} className = {{
+      root:classes.cssLabel,
+    focused: classes.cssUnderline}} value={this.state.name}/>
 
     </Grid>
 

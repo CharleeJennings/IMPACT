@@ -104,7 +104,7 @@ server.express.get( '*', (req, res ,next) => {
    // Create a theme instance.
    const theme = createMuiTheme({
      palette: {
-       primary: red,
+       primary: blue,
 			 secondary: {main: '#FFFFFF'},
        accent: red,
        type: 'light',
