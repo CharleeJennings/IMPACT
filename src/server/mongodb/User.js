@@ -13,7 +13,7 @@ type User
   firstname : String!
   lastname : String!
 	email : String!
-	pin : String!
+	pin : Int!
 	admin : Boolean
 	accessCode: String
 	points : Int
@@ -22,7 +22,7 @@ type Mutation{
 	createUser(firstname: String!, lastname: String!, email : String!, pin: String!, admin: Boolean , accessCode: String) : User
 	updateAccess (id: ID!, accessCode : String!) : User
 	updateAdmin(id: ID!, admin: Boolean!) : User
-}   
+}
 `
 
 
@@ -43,7 +43,7 @@ const UserSchema =mongoose.Schema({
 
 
 
-		UserSchema.methods.validPassword = function( pwd ) {
+		UserSchema.methods.validPin = function( pwd ) {
 			    return ( bcryptjs.compareSync(pwd , this.pin) );
 			};
 

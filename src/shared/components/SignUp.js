@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import gql from 'graphql-tag'
 import {graphql} from 'react-apollo'
 import red from '@material-ui/core/colors/red';
-
+import Input from '@material-ui/core/Input';
 
 const styles = theme => ({
 
@@ -46,11 +46,11 @@ container:
 
 const ADD_USER = gql`
 
-mutation(  $firstname: String!, $lastname: String!, $email: String!, $password: String!)
+mutation(  $firstname: String!, $lastname: String!, $email: String!, $pin: String!)
 {
-  createUser( firstname : $firstname, lastname : $lastname, email: $email, password : $password )
+  createUser( firstname : $firstname, lastname : $lastname, email: $email, pin : $pin )
   {
-    password
+    pin
   }
 }
 `;
@@ -73,7 +73,7 @@ class SignUp extends React.Component
   constructor(props)
   {
     super(props)
-    this.state = {firstname: null , lastname: null, email: null, password: null, emailC: '' , passwordC: '' }
+    this.state = {firstname: null , lastname: null, email: null, pin: null, emailC: '' , pinC: '' }
   }
 
 
@@ -105,7 +105,7 @@ class SignUp extends React.Component
   register = () =>
   {
 
-    this.props.createUser({ variables:{firstname: this.state.firstname, lastname : this.state.lastname , email: this.state.email, password: this.state.password}  })
+    this.props.createUser({ variables:{firstname: this.state.firstname, lastname : this.state.lastname , email: this.state.email, pin: this.state.pin}  })
   };
 
 
@@ -122,36 +122,36 @@ class SignUp extends React.Component
     <Grid container direction='column'>
 
     <Grid item>
-    <TextField name = "firstname" label = "First Name" onChange={this.handleChange.bind(this)} value={this.state.name} autoFocus/>
+    <Input name = "firstname" placeholder = "First Name" onChange={this.handleChange.bind(this)} value={this.state.name} autoFocus/>
     </Grid>
 
     <Grid item>
-    <TextField name = "lastname" label = "Last Name" onChange={this.handleChange.bind(this)} value={this.state.name}/>
+    <Input name = "lastname" placeholder = "Last Name" onChange={this.handleChange.bind(this)} value={this.state.name}/>
     </Grid>
 
     <Grid item>
-    <TextField name = "usertname" label = "User Name" onChange={this.handleChange.bind(this)} value={this.state.name}/>
+    <Input name = "usertname" placeholder = "User Name" onChange={this.handleChange.bind(this)} value={this.state.name}/>
 
     </Grid>
 
     <Grid item>
-    <TextField name = "email" label = "Email" onChange={this.handleChange.bind(this)} value={this.state.name}/>
+    <Input name = "email" placeholder = "Email" onChange={this.handleChange.bind(this)} value={this.state.name}/>
     </Grid>
 
     <Grid item>
-    <TextField name = "emailC" label = "Confirm Email" onChange={this.handleChange.bind(this)} className = {{
+    <Input name = "emailC" placeholder = "Confirm Email" onChange={this.handleChange.bind(this)} className = {{
       root:classes.cssLabel,
     focused: classes.cssUnderline}} value={this.state.name}/>
 
     </Grid>
 
     <Grid item>
-    <TextField name = "password" label = "Password" onChange={this.handleChange.bind(this)} value={this.state.name}/>
+    <Input name = "pin" placeholder = "Pin" onChange={this.handleChange.bind(this)} value={this.state.name}/>
 
     </Grid>
 
     <Grid item>
-    <TextField name = "passwordC" label = "Confirm Password" onChange={this.handleChange.bind(this)} value={this.state.name}/>
+    <Input name = "pinC" placeholder = "Confirm Pin" onChange={this.handleChange.bind(this)} value={this.state.name}/>
     </Grid>
 
     </Grid>
