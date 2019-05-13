@@ -25,7 +25,7 @@ const styles = theme => ({
 container:
 {
   position: 'relative',
-  top: 200,
+  top: 150,
 },
   textField: {
 
@@ -61,11 +61,11 @@ constructor(props)
   super(props)
   this.state = {
     username: '',
-    password: '',
+    pin: '',
 
   };
 }
-handleChange(event)
+ handleChange = (event) =>
 {
   const name = event.target.name
   this.setState({
@@ -94,18 +94,18 @@ handleChange(event)
           name='username'
           className={classes.textField}
           value={this.state.name}
-          onChange={this.handleChange.bind(this)}
+          onChange={this.handleChange}
           autoFocus
         />
         </Grid>
         <Grid item>
         <TextField
           id="standard-name"
-          label="Password"
-          name='password'
+          label="Pin"
+          name='pin'
           className={classes.textField}
           value={this.state.name}
-          onChange={this.handleChange.bind(this)}
+          onChange={this.handleChange}
 
         />
         </Grid>

@@ -13,7 +13,7 @@ type User
   firstname : String!
   lastname : String!
 	email : String!
-	pin : Int!
+	pin : String!
 	admin : Boolean
 	accessCode: String
 	points : Int
@@ -22,7 +22,11 @@ type Mutation{
 	createUser(firstname: String!, lastname: String!, email : String!, pin: String!, admin: Boolean , accessCode: String) : User
 	updateAccess (id: ID!, accessCode : String!) : User
 	updateAdmin(id: ID!, admin: Boolean!) : User
+	deleteUser(id:ID!) : User
+	deleteAllUser : User
 }
+
+
 `
 
 
@@ -50,15 +54,12 @@ const UserSchema =mongoose.Schema({
 
 const User = mongoose.model("Users" , UserSchema );
 
-
 	const resolvers = {
 
-		Query: {
-
+		Query:
+		{
 			users : () => User.find()
-
 		},
-
 
 		Mutation:
 		{
@@ -70,11 +71,20 @@ const User = mongoose.model("Users" , UserSchema );
 				return user;
 
 			},
+
 			updateAccess: async (_ , {id, accessCode}) => {await User.findByIdAndUpdate(id, {accessCode});
-			return true;
-		},
-		updateAdmin: async (_ , {id, admin}) => {await User.findByIdAndUpdate(id, {admin})}
-	}
+			return true;},
+
+			updateAdmin: async (_ , {id, admin}) => {await User.findByIdAndUpdate(id, {admin})},
+
+			deleteUser: async (_ , {id}) => {await User.findByIdAndRemove(id)},
+
+			deleteAllUser : async (_) =>{await User.deleteMany()}
+
+
+},
+
+
 	}
 
 

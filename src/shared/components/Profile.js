@@ -36,7 +36,7 @@ constructor(props)
   render()
 
 	 {
-		return(<h1></h1>);
+		return(<h1> This is the end of the demo</h1>);
   }
 }
 

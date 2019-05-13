@@ -9,19 +9,12 @@ import gql from 'graphql-tag'
 import {graphql} from 'react-apollo'
 import red from '@material-ui/core/colors/red';
 import Input from '@material-ui/core/Input';
+import Error from '@material-ui/icons/Error'
+
 
 const styles = theme => ({
 
-  cssLabel: {
-    '&$cssFocused': {
-      color: red[500],
-    },
-  },
-  cssUnderline: {
-   '&:after': {
-     borderBottomColor: red[500],
-   },
- },
+
 card:
 {
   minWidth: 275,
@@ -37,7 +30,7 @@ button:
 
 container:
 {
-  top: 300,
+  top: 150,
   position: 'relative',
 }
 
@@ -57,7 +50,12 @@ mutation(  $firstname: String!, $lastname: String!, $email: String!, $pin: Strin
 
 function Compare(field1, field2)
 {
-  if (field1 === field2 )
+
+  var length = field1.length
+
+  var buffer = field2.substring(0,length)
+
+  if (field1 === buffer )
   {
     return true
   }
@@ -73,7 +71,7 @@ class SignUp extends React.Component
   constructor(props)
   {
     super(props)
-    this.state = {firstname: null , lastname: null, email: null, pin: null, emailC: '' , pinC: '' }
+    this.state = {firstname: null , lastname: null, email: null, pin: null, emailC: '' , pinC: '', errorE: false, errorP: false }
   }
 
 
@@ -89,13 +87,14 @@ class SignUp extends React.Component
 
   if (name == 'emailC')
   {
-    if (Compare(event.target.value , this.state.email))
+    if ( ! Compare(event.target.value , this.state.email))
     {
+      this.setState({errorE: true})
 
     }
     else
     {
-
+      this.setState({errorE: false})
     }
   }
 
@@ -122,41 +121,38 @@ class SignUp extends React.Component
     <Grid container direction='column'>
 
     <Grid item>
-    <Input name = "firstname" placeholder = "First Name" onChange={this.handleChange.bind(this)} value={this.state.name} autoFocus/>
+    <TextField  name = "firstname" placeholder = "First Name" onChange={this.handleChange.bind(this)} value={this.state.name} autoFocus/>
     </Grid>
 
     <Grid item>
-    <Input name = "lastname" placeholder = "Last Name" onChange={this.handleChange.bind(this)} value={this.state.name}/>
+    <TextField name = "lastname" placeholder = "Last Name" onChange={this.handleChange.bind(this)} value={this.state.name}/>
+    </Grid>
+
+
+    <Grid item>
+    <TextField name = "email" placeholder = "Email" onChange={this.handleChange.bind(this)} value={this.state.name}/>
     </Grid>
 
     <Grid item>
-    <Input name = "usertname" placeholder = "User Name" onChange={this.handleChange.bind(this)} value={this.state.name}/>
-
+    <TextField name = "emailC" placeholder = "Confirm Email" onChange={this.handleChange.bind(this)} error={this.state.errorE} value={this.state.name}/>
+{
+    this.state.errorE &&   <Error/>
+}
     </Grid>
 
     <Grid item>
-    <Input name = "email" placeholder = "Email" onChange={this.handleChange.bind(this)} value={this.state.name}/>
-    </Grid>
-
-    <Grid item>
-    <Input name = "emailC" placeholder = "Confirm Email" onChange={this.handleChange.bind(this)} className = {{
-      root:classes.cssLabel,
-    focused: classes.cssUnderline}} value={this.state.name}/>
-
-    </Grid>
-
-    <Grid item>
-    <Input name = "pin" placeholder = "Pin" onChange={this.handleChange.bind(this)} value={this.state.name}/>
+    <TextField name = "pin" placeholder = "Pin" onChange={this.handleChange.bind(this)} value={this.state.name}  inputProps= {{maxLength: "4"}}/>
 
     </Grid>
 
     <Grid item>
-    <Input name = "pinC" placeholder = "Confirm Pin" onChange={this.handleChange.bind(this)} value={this.state.name}/>
+    <TextField name = "pinC" placeholder = "Confirm Pin" onChange={this.handleChange.bind(this)} value={this.state.name} inputProps={{maxLength: "4" }}/>
+
     </Grid>
 
     </Grid>
     </Card>
-    <Button variant='contained' onClick= {() => this.register() } className = {classes.button}>
+    <Button variant='contained' onClick= {() => this.register() } className = {classes.button} color="primary">
     Submit
     </Button>
     </form>
