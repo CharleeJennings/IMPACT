@@ -7,6 +7,7 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid'
+import Error from '@material-ui/icons/Error'
 
 
 
@@ -61,10 +62,17 @@ constructor(props)
   super(props)
   this.state = {
     username: '',
-    pin: '',
+    password: '',
 
   };
 }
+
+
+componentDidMount()
+{
+  document.body.style.backgroundColor = "white"
+}
+
  handleChange = (event) =>
 {
   const name = event.target.name
@@ -101,8 +109,8 @@ constructor(props)
         <Grid item>
         <TextField
           id="standard-name"
-          label="Pin"
-          name='pin'
+          label="Password"
+          name='password'
           className={classes.textField}
           value={this.state.name}
           onChange={this.handleChange}

@@ -13,13 +13,12 @@ type User
   firstname : String!
   lastname : String!
 	email : String!
-	pin : String!
+	password : String!
 	admin : Boolean
-	accessCode: String
 	points : Int
 }
 type Mutation{
-	createUser(firstname: String!, lastname: String!, email : String!, pin: String!, admin: Boolean , accessCode: String) : User
+	createUser(firstname: String!, lastname: String!, email : String!, password: String!, admin: Boolean ,  points: Int) : User
 	updateAccess (id: ID!, accessCode : String!) : User
 	updateAdmin(id: ID!, admin: Boolean!) : User
 	deleteUser(id:ID!) : User
@@ -30,15 +29,15 @@ type Mutation{
 `
 
 
+
 const UserSchema =mongoose.Schema({
 
 
 		email : String,
     firstname: String,
     lastname: String,
-		pin: String,
+		password: String,
 		admin: Boolean,
-		accessCode: String,
 		points: Number,
 
 
@@ -47,8 +46,8 @@ const UserSchema =mongoose.Schema({
 
 
 
-		UserSchema.methods.validPin = function( pwd ) {
-			    return ( bcryptjs.compareSync(pwd , this.pin) );
+		UserSchema.methods.validPassword = function( pwd ) {
+			    return ( bcryptjs.compareSync(pwd , this.password) );
 			};
 
 
@@ -63,10 +62,10 @@ const User = mongoose.model("Users" , UserSchema );
 
 		Mutation:
 		{
-			createUser: async (_ , {firstname, lastname,email , pin}) => {
+			createUser: async (_ , {firstname, lastname,email , password}) => {
 				var salt = bcryptjs.genSaltSync(10);
-				var hash = bcryptjs.hashSync(pin, salt);
-				const user = new User ({firstname ,lastname, email , pin: hash});
+				var hash = bcryptjs.hashSync(password, salt);
+				const user = new User ({firstname ,lastname, email , password: hash, points: 0});
 				 await user.save();
 				return user;
 

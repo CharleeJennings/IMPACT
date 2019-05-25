@@ -30,9 +30,13 @@ import {
 import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
 import purple from '@material-ui/core/colors/purple';
+import {store} from '../shared/redux/store'
+import {Provider} from 'react-redux'
+import {reducer} from '../shared/redux/reducer'
 
 
-import bcrypt from 'bcrypt';
+
+
 
 
 
@@ -47,7 +51,7 @@ const server = new GraphQLServer ({typeDefs , resolvers})
 
 	server.express.use(flash())
   server.express.use(bodyParser.urlencoded({ extended: false }));
-  server.express.use(session({ secret: 'NishaK' , resave: true, saveUninitialized: true, cookie: {maxAge: 60000}}));
+  server.express.use(session({ secret: 'Impact' , resave: true, saveUninitialized: true, cookie: {maxAge: 60000}}));
   server.express.use(passport.initialize());
   server.express.use(passport.session());
 
@@ -96,6 +100,8 @@ server.express.get('/home', (req,res,next) => {
 server.express.get( '*', (req, res ,next) => {
 
 
+
+
 	const sheetsRegistry = new SheetsRegistry();
 
    // Create a sheetsManager instance.
@@ -127,18 +133,25 @@ const client = new ApolloClient({
 		cache: new InMemoryCache(),
 	});
 
+ const preloadedState = store.getState()
 
 const markup = renderToString(
+  <Provider store= {store}>
 	<JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
 
 	<MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
 	<ApolloProvider client = {client}>
+
 	<StaticRouter location= {req.url} context= {req.session}>
+
 	<App />
+
 	</StaticRouter>
+
 	</ApolloProvider>
 	 </MuiThemeProvider>
 	  </JssProvider>
+        </Provider>
 	)
   const css = sheetsRegistry.toString()
 
@@ -151,7 +164,8 @@ const markup = renderToString(
 			<title> I.M.P.A.C.T </title>
       <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
 			<script src = '/bundle.js' defer> </script>
-			<script>window.__INITIAL_DATA__ = ${serialize(req.session)} </script>
+			<script>window.__INITIAL_DATA__ = ${serialize(req.session)}
+      window.__PRELOADED_STATE__ = ${serialize(preloadedState)}</script>
 			</head>
 			<body>
 				<div id = 'app'>${markup}</div>

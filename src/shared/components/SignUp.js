@@ -30,7 +30,7 @@ button:
 
 container:
 {
-  top: 150,
+  top: 250,
   position: 'relative',
 }
 
@@ -39,12 +39,13 @@ container:
 
 const ADD_USER = gql`
 
-mutation(  $firstname: String!, $lastname: String!, $email: String!, $pin: String!)
+mutation(  $firstname: String!, $lastname: String!, $email: String!, $password: String!)
 {
-  createUser( firstname : $firstname, lastname : $lastname, email: $email, pin : $pin )
+  createUser( firstname : $firstname, lastname : $lastname, email: $email, password : $password )
   {
-    pin
+    firstname
   }
+
 }
 `;
 
@@ -71,7 +72,7 @@ class SignUp extends React.Component
   constructor(props)
   {
     super(props)
-    this.state = {firstname: null , lastname: null, email: null, pin: null, emailC: '' , pinC: '', errorE: false, errorP: false }
+    this.state = {firstname: null , lastname: null, email: '', password: '', emailC: '' , passwordC: '', errorE: false, errorP: false }
   }
 
 
@@ -85,7 +86,7 @@ class SignUp extends React.Component
       [name] : event.target.value,
     })
 
-  if (name == 'emailC')
+  if (name == 'emailC' || name == 'email')
   {
     if ( ! Compare(event.target.value , this.state.email))
     {
@@ -98,13 +99,26 @@ class SignUp extends React.Component
     }
   }
 
+  if (name == 'passwordC' || name == 'password')
+  {
+    if ( ! Compare(event.target.value , this.state.password))
+    {
+      this.setState({errorP: true})
+
+    }
+    else
+    {
+      this.setState({errorP: false})
+    }
+  }
+
 
   }
 
   register = () =>
   {
 
-    this.props.createUser({ variables:{firstname: this.state.firstname, lastname : this.state.lastname , email: this.state.email, pin: this.state.pin}  })
+    this.props.createUser({ variables:{firstname: this.state.firstname, lastname : this.state.lastname , email: this.state.email, password: this.state.password}  })
   };
 
 
@@ -141,13 +155,15 @@ class SignUp extends React.Component
     </Grid>
 
     <Grid item>
-    <TextField name = "pin" placeholder = "Pin" onChange={this.handleChange.bind(this)} value={this.state.name}  inputProps= {{maxLength: "4"}}/>
+    <TextField name = "password" placeholder = "Pin" onChange={this.handleChange.bind(this)} value={this.state.name}  inputProps= {{maxLength: "4"}}/>
 
     </Grid>
 
     <Grid item>
-    <TextField name = "pinC" placeholder = "Confirm Pin" onChange={this.handleChange.bind(this)} value={this.state.name} inputProps={{maxLength: "4" }}/>
-
+    <TextField name = "passwordC" placeholder = "Confirm Pin" onChange={this.handleChange.bind(this)} error={this.state.errorP} value={this.state.name} inputProps={{maxLength: "4" }}/>
+    {
+        this.state.errorP &&   <Error/>
+    }
     </Grid>
 
     </Grid>

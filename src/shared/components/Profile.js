@@ -1,13 +1,29 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid'
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux'
+ import compose from 'recompose/compose'
+ import {addFirstname} from '../redux/action'
 
 
-const style = theme => ({
+
+const styles = theme => ({
 
 container:
 {
 
 },
+
+card:
+{
+	postion: 'relative',
+	margin: 50,
+	height: 200,
+
+
+}
 
 
 
@@ -31,13 +47,64 @@ constructor(props)
 	}
 
 	this.state = {data}
+
+
+
+
 }
 
-  render()
 
+  render()
 	 {
-		return(<h1> This is the end of the demo</h1>);
+     console.log(this.props.firstname);
+     this.props.addFirst("CHARLEES")
+     console.log(this.props.firstname);
+		 const { classes } = this.props;
+		 const {data} = this.state
+		 	if (data.passport)
+		return(
+			<Grid container direction= 'column'>
+			<Grid item>
+			<Card className= {classes.card}>
+
+			<Grid container justify = 'center'>
+			<Grid item>
+
+			You currently have points
+
+			</Grid>
+			</Grid>
+
+			</Card>
+			</Grid>
+
+
+
+		  </Grid>);
+			else {
+				return (<h5>  You need to <a href='/'>log in</a> first! </h5>)
+			}
   }
 }
 
-export default Profile;
+
+Profile.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+const mapStatetoProps = state => {
+
+	return {firstname: state.fname}
+}
+
+const mapDispatchtoProps = dispatch => {
+
+  return {
+    addFirst: (name) => dispatch(addFirstname(name))
+
+  }
+}
+
+
+
+export default compose(withStyles(styles,{name: 'Profile'}),connect(mapStatetoProps,mapDispatchtoProps))(Profile);
