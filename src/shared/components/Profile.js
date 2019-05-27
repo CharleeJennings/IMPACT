@@ -4,9 +4,24 @@ import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
- import compose from 'recompose/compose'
- import {addFirstname} from '../redux/action'
+import compose from 'recompose/compose'
+import {addFirstname, addUser} from '../redux/action'
+import Typography from '@material-ui/core/Typography';
+import {graphql, Query} from 'react-apollo'
+import gql from 'graphql-tag'
 
+
+
+const FETCH_USER = gql`query FetchUser($id: ID!){
+	fetchUser(id : $id )
+  {
+		firstname
+    password
+		lastname
+		points
+}
+
+}`
 
 
 const styles = theme => ({
@@ -26,12 +41,14 @@ card:
 }
 
 
-
-
 })
 
 
-class Profile extends React.Component {
+
+
+
+
+class Profile_page extends React.Component {
 
 constructor(props)
 {
@@ -49,62 +66,74 @@ constructor(props)
 	this.state = {data}
 
 
-
-
 }
 
 
   render()
 	 {
-     console.log(this.props.firstname);
-     this.props.addFirst("CHARLEES")
-     console.log(this.props.firstname);
+
 		 const { classes } = this.props;
 		 const {data} = this.state
 		 	if (data.passport)
-		return(
+      {
+      console.log(data.passport);
+		  return(
+<div>
+
 			<Grid container direction= 'column'>
-			<Grid item>
-			<Card className= {classes.card}>
+			   <Grid item>
+			      <Card className= {classes.card}>
+			         <Grid container justify = 'center'>
+			            <Grid item>
+                    <Typography>
+										<Query query={FETCH_USER} variables={{id: data.passport.user}}>
 
-			<Grid container justify = 'center'>
-			<Grid item>
-
-			You currently have points
-
+									{
+									  ( {loading, error, data}) =>
+									  {
+									    if (loading) return null;
+									    if (error) return `Error ${error}`
+											this.props.addUser(data.fetchUser)
+									    return (`Hello ${data.fetchUser.firstname}, you have ${data.fetchUser.points} points accumulated!`)
+									  }
+									}
+									</Query>
+                     </Typography>
+			            </Grid>
+			         </Grid>
+			    </Card>
 			</Grid>
-			</Grid>
-
-			</Card>
-			</Grid>
-
-
-
-		  </Grid>);
-			else {
+		  </Grid>
+    </div>);
+      }
+			else
+      {
 				return (<h5>  You need to <a href='/'>log in</a> first! </h5>)
 			}
   }
 }
 
 
-Profile.propTypes = {
+Profile_page.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStatetoProps = state => {
 
-	return {firstname: state.fname}
+//REDUX MAP CONNECTION
+const mapStatetoProps = state =>
+{
+	return {firstname: state.fname,
+					user: state.user
+	}
 }
-
 const mapDispatchtoProps = dispatch => {
 
   return {
-    addFirst: (name) => dispatch(addFirstname(name))
-
+    addFirst: (name) => dispatch(addFirstname(name)),
+		addUser: (user)=> dispatch(addUser(user))
   }
 }
 
 
 
-export default compose(withStyles(styles,{name: 'Profile'}),connect(mapStatetoProps,mapDispatchtoProps))(Profile);
+export default compose(withStyles(styles,{name: 'Profile_page'}),connect(mapStatetoProps,mapDispatchtoProps))(Profile_page);

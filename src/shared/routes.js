@@ -2,7 +2,7 @@ import Login from './components/Login'
 
 import SignUp from './components/SignUp'
 
-import Profile from './components/Profile'
+import Profile_page from './components/Profile'
 
 const routes = [
 
@@ -14,7 +14,7 @@ const routes = [
 {
 	path: '/profile',
 	exact: true,
-	component: Profile,
+	component: Profile_page,
 },
 {
 	path: '/signup',

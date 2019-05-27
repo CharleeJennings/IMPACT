@@ -6,6 +6,7 @@ const typeDefs = `
 type Query
 {
 	users: [User]
+	fetchUser(id: ID!) : User
 }
 type User
 {
@@ -23,6 +24,7 @@ type Mutation{
 	updateAdmin(id: ID!, admin: Boolean!) : User
 	deleteUser(id:ID!) : User
 	deleteAllUser : User
+
 }
 
 
@@ -43,7 +45,7 @@ const UserSchema =mongoose.Schema({
 
 	});
 
-
+export var Dup = false
 
 
 		UserSchema.methods.validPassword = function( pwd ) {
@@ -57,7 +59,13 @@ const User = mongoose.model("Users" , UserSchema );
 
 		Query:
 		{
-			users : () => User.find()
+			users : () => User.find(),
+			fetchUser:  async (_ , {id}) =>
+			{
+				var sessionUser = {}
+				await User.findById(id, function (err, user){sessionUser = user})
+				return sessionUser
+		  }
 		},
 
 		Mutation:
@@ -65,10 +73,19 @@ const User = mongoose.model("Users" , UserSchema );
 			createUser: async (_ , {firstname, lastname,email , password}) => {
 				var salt = bcryptjs.genSaltSync(10);
 				var hash = bcryptjs.hashSync(password, salt);
-				const user = new User ({firstname ,lastname, email , password: hash, points: 0});
-				 await user.save();
-				return user;
-
+				var dup = false
+				await User.findOne({firstname: firstname, lastname: lastname}, (err, res) => {if (err){console.log("Error in connecting to MongoDB");} else if (res){  dup = true;};})
+				if (dup)
+				{
+					console.log("Duplicate found on Database found on the name: " + firstname + " " + lastname);
+					return null
+				}
+				else
+				{
+					const user = new User ({firstname ,lastname, email , password: hash, points: 0})
+					await user.save();
+					return user;
+				}
 			},
 
 			updateAccess: async (_ , {id, accessCode}) => {await User.findByIdAndUpdate(id, {accessCode});

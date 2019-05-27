@@ -5,7 +5,7 @@ import routes from '../shared/routes'
 import App from '../shared/App';
 import React from 'react'
 import mongoose from 'mongoose';
-import { typeDefs, resolvers, User, UserSchema }  from './mongodb/User'
+import { typeDefs, resolvers, User, UserSchema, Dup }  from './mongodb/User'
 import {GraphQLServer} from 'graphql-yoga';
 import cors from 'cors'
 import 'cross-fetch/polyfill';
@@ -123,6 +123,7 @@ server.express.get( '*', (req, res ,next) => {
    });
 
 const generateClassName = createGenerateClassName();
+
 
 const activeRoute = routes.find((route) => matchPath(req.url, route)) || {}
 const client = new ApolloClient({
