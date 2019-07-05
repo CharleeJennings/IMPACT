@@ -109,7 +109,7 @@ devServer: {
   module: {
     rules: [
       {test: /\.(jsx?)$/, loader: 'babel-loader',exclude: /(node_modules)/ },
-		
+
       {
           test: /\.css$/,
           use: [ 'ignore-loader']
@@ -122,7 +122,8 @@ devServer: {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __isBrowser__: "false"
+      __isBrowser__: "false",
+			window:"{}",
     }),
   ]
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useContext } from 'react';
 import routes from './routes'
 import {Route, Switch, Redirect} from 'react-router-dom'
 
@@ -7,13 +7,9 @@ import {Route, Switch, Redirect} from 'react-router-dom'
 
 
 
-export default class App extends React.Component
+const App = (props) =>
 {
 
-
-
-	render()
-	{
 		return(
 		<div>
 		<Switch>
@@ -26,5 +22,8 @@ export default class App extends React.Component
 
 		</Switch>
 		 </div> );
+
+
 	}
-}
+
+	export default App

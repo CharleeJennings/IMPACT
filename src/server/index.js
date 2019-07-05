@@ -33,11 +33,7 @@ import purple from '@material-ui/core/colors/purple';
 import {store} from '../shared/redux/store'
 import {Provider} from 'react-redux'
 import {reducer} from '../shared/redux/reducer'
-
-
-
-
-
+import window from 'global'
 
 
 var LocalStrategy = passportLocal.Strategy;
@@ -51,7 +47,7 @@ const server = new GraphQLServer ({typeDefs , resolvers})
 
 	server.express.use(flash())
   server.express.use(bodyParser.urlencoded({ extended: false }));
-  server.express.use(session({ secret: 'Impact' , resave: true, saveUninitialized: true, cookie: {maxAge: 60000}}));
+  server.express.use(session({ secret: 'Impact' , resave: true, saveUninitialized: true, cookie: {maxAge: 200000}}));
   server.express.use(passport.initialize());
   server.express.use(passport.session());
 
@@ -100,6 +96,10 @@ server.express.get('/home', (req,res,next) => {
 server.express.get( '*', (req, res ,next) => {
 
 
+if (typeof window === 'undefined')
+{
+  global.window={}
+}
 
 
 	const sheetsRegistry = new SheetsRegistry();

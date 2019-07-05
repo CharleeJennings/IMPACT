@@ -1,5 +1,10 @@
 import mongoose from 'mongoose'
 import bcryptjs from  'bcryptjs' ;
+import {
+  GraphQLDate,
+  GraphQLTime,
+  GraphQLDateTime
+} from 'graphql-iso-date';
 
 
 const typeDefs = `
@@ -17,6 +22,7 @@ type User
 	password : String!
 	admin : Boolean
 	points : Int
+	birthday: String!
 }
 type Mutation{
 	createUser(firstname: String!, lastname: String!, email : String!, password: String!, admin: Boolean ,  points: Int) : User
@@ -41,6 +47,7 @@ const UserSchema =mongoose.Schema({
 		password: String,
 		admin: Boolean,
 		points: Number,
+		birthday:  { type: Date, default: Date },
 
 
 	});

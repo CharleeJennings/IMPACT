@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { hydrate } from 'react-dom';
 import ApolloClient from "apollo-boost";
@@ -14,7 +14,8 @@ import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
 import {store} from '../shared/redux/store'
 import {Provider} from 'react-redux'
-
+import {useTransition , animated} from 'react-spring'
+import {__RouterContext} from 'react-router'
 
 
 const client = new ApolloClient({});
@@ -33,8 +34,15 @@ class Main extends React.Component {
      // Allow the passed state to be garbage-collected
      delete window.__PRELOADED_STATE__
 
+
+
    }
+
+
+
   render() {
+
+
     return <App/>
   }
 }

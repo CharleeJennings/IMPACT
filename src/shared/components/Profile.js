@@ -28,16 +28,17 @@ const styles = theme => ({
 
 container:
 {
-
+	position:'relative',
+	top: 50,
+	margin: 20,
 },
 
 card:
 {
-	postion: 'relative',
+	position: 'relative',
 	margin: 50,
-	height: 200,
-
-
+	height: 600,
+	width: '50%'
 }
 
 
@@ -78,33 +79,32 @@ constructor(props)
       {
       console.log(data.passport);
 		  return(
-<div>
-
-			<Grid container direction= 'column'>
-			   <Grid item>
-			      <Card className= {classes.card}>
-			         <Grid container justify = 'center'>
-			            <Grid item>
-                    <Typography>
 										<Query query={FETCH_USER} variables={{id: data.passport.user}}>
-
 									{
 									  ( {loading, error, data}) =>
 									  {
-									    if (loading) return null;
+									    if (loading) return 'Loading';
 									    if (error) return `Error ${error}`
 											this.props.addUser(data.fetchUser)
-									    return (`Hello ${data.fetchUser.firstname}, you have ${data.fetchUser.points} points accumulated!`)
+									    return (<Grid container direction='row'>
+													<Grid item>
+													<Card className={classes.card} >
+												    <Typography className = {classes.container}>
+															Hello {data.fetchUser.firstname}, you have {data.fetchUser.points} points accumulated!
+											       </Typography>
+														 </Card>
+														 </Grid>
+														 <Grid item>
+														 <Card className={classes.card}>
+														 	Hello
+														 </Card>
+														 </Grid>
+
+													 </Grid>)
 									  }
 									}
 									</Query>
-                     </Typography>
-			            </Grid>
-			         </Grid>
-			    </Card>
-			</Grid>
-		  </Grid>
-    </div>);
+			         );
       }
 			else
       {

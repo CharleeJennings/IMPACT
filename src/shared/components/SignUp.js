@@ -6,10 +6,15 @@ import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid'
 import gql from 'graphql-tag'
-import {graphql} from 'react-apollo'
+import {graphql, Mutation} from 'react-apollo'
 import red from '@material-ui/core/colors/red';
 import Input from '@material-ui/core/Input';
 import Error from '@material-ui/icons/Error'
+import DatePicker from 'pikaday-react-wrapper';
+
+import window from 'global'
+
+
 
 
 const styles = theme => ({
@@ -32,7 +37,14 @@ container:
 {
   top: 250,
   position: 'relative',
-}
+},
+
+container2:
+{
+  position: 'relative',
+},
+
+
 
 })
 
@@ -72,8 +84,11 @@ class SignUp extends React.Component
   constructor(props)
   {
     super(props)
-    this.state = {firstname: null , lastname: null, email: '', password: '', emailC: '' , passwordC: '', errorE: false, errorP: false }
+    this.state = {firstname: null , lastname: null, email: '', password: '', emailC: '' , passwordC: '', errorE: false, errorP: false, date : '' }
+    if (__isBrowser__)
+    console.log(window);
   }
+
 
 
 
@@ -115,24 +130,23 @@ class SignUp extends React.Component
 
   }
 
-  register = () =>
-  {
-
-    this.props.createUser({ variables:{firstname: this.state.firstname, lastname : this.state.lastname , email: this.state.email, password: this.state.password}  })
-  };
-
 
 
   render()
   {
     const {classes} = this.props;
+    const { date } = this.state;
+
     return (
          <Grid container  justify='center' className = {classes.container}>
 
+<Mutation mutation = {ADD_USER}>
+{(createUser, {data}) =>(
 
-    <form method='post'>
+    <form method='post' onSubmit = {e =>
+       {e.preventDefault();  createUser({ variables:{firstname: this.state.firstname, lastname : this.state.lastname , email: this.state.email, password: this.state.password}  }); console.log(data); }}>
     <Card className= {classes.card}>
-    <Grid container direction='column'>
+    <Grid container justify='center' className={classes.container2}>
 
     <Grid item>
     <TextField  name = "firstname" placeholder = "First Name" onChange={this.handleChange.bind(this)} value={this.state.name} autoFocus/>
@@ -154,6 +168,9 @@ class SignUp extends React.Component
 }
     </Grid>
 
+
+
+
     <Grid item>
     <TextField name = "password" placeholder = "Pin" onChange={this.handleChange.bind(this)} value={this.state.name}  inputProps= {{maxLength: "4"}}/>
 
@@ -166,13 +183,19 @@ class SignUp extends React.Component
     }
     </Grid>
 
+
+
     </Grid>
     </Card>
-    <Button variant='contained' onClick= {() => this.register() } className = {classes.button} color="primary">
+    <Button variant='contained' href="" className = {classes.button} color="primary" type = 'submit'>
     Submit
     </Button>
     </form>
+  )}
+    </Mutation>
       </Grid>);
+
+
   }
 }
 
