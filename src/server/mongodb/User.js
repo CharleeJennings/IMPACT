@@ -12,6 +12,7 @@ type Query
 {
 	users: [User]
 	fetchUser(id: ID!) : User
+  leaders: [Leader]
 }
 type User
 {
@@ -24,17 +25,42 @@ type User
 	points : Int
 	birthday: String!
 }
+
+type Leader{
+
+
+  email: String
+  firstname: String!
+  lastname: String
+  password: String!
+}
+
 type Mutation{
 	createUser(firstname: String!, lastname: String!, email : String!, password: String!, admin: Boolean ,  points: Int) : User
 	updateAccess (id: ID!, accessCode : String!) : User
 	updateAdmin(id: ID!, admin: Boolean!) : User
 	deleteUser(id:ID!) : User
 	deleteAllUser : User
+  createLeader(firstname: String!, lastname: String!, password: String!) : Leader
 
 }
 
 
 `
+
+
+const LeaderSchema = mongoose.Schema({
+
+
+  email: String,
+  firstname: String,
+  lastname: String,
+  password: String,
+
+
+
+
+})
 
 
 
@@ -54,13 +80,15 @@ const UserSchema =mongoose.Schema({
 
 export var Dup = false
 
-
+LeaderSchema.methods.validPassword = function( pwd ) {
+      return ( pwd == this.password );
+  };
 		UserSchema.methods.validPassword = function( pwd ) {
-			    return ( bcryptjs.compareSync(pwd , this.password) );
+			    return ( bcryptjs.compareSync(pwd , this.password)  );
 			};
+const Leader = mongoose.model("Leaders", LeaderSchema)
 
-
-const User = mongoose.model("Users" , UserSchema );
+const User = mongoose.model("user" , UserSchema )
 
 	const resolvers = {
 
@@ -78,8 +106,7 @@ const User = mongoose.model("Users" , UserSchema );
 		Mutation:
 		{
 			createUser: async (_ , {firstname, lastname,email , password}) => {
-				var salt = bcryptjs.genSaltSync(10);
-				var hash = bcryptjs.hashSync(password, salt);
+
 				var dup = false
 				await User.findOne({firstname: firstname, lastname: lastname}, (err, res) => {if (err){console.log("Error in connecting to MongoDB");} else if (res){  dup = true;};})
 				if (dup)
@@ -89,6 +116,8 @@ const User = mongoose.model("Users" , UserSchema );
 				}
 				else
 				{
+          var salt = bcryptjs.genSaltSync(10);
+          var hash = bcryptjs.hashSync(password, salt);
 					const user = new User ({firstname ,lastname, email , password: hash, points: 0})
 					await user.save();
 					return user;
@@ -102,7 +131,13 @@ const User = mongoose.model("Users" , UserSchema );
 
 			deleteUser: async (_ , {id}) => {await User.findByIdAndRemove(id)},
 
-			deleteAllUser : async (_) =>{await User.deleteMany()}
+			deleteAllUser : async (_) =>{await User.deleteMany()},
+
+      createLeader: async (_ , {firstname, lastname, password}) => {
+        const lead = new Leader({firstname, lastname, password})
+        await lead.save();
+        return lead
+      }
 
 
 },
@@ -113,4 +148,4 @@ const User = mongoose.model("Users" , UserSchema );
 
 
 
-export  {typeDefs, UserSchema, User, resolvers}
+export  {typeDefs, UserSchema, User, resolvers, Leader}

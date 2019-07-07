@@ -5,7 +5,7 @@ import routes from '../shared/routes'
 import App from '../shared/App';
 import React from 'react'
 import mongoose from 'mongoose';
-import { typeDefs, resolvers, User, UserSchema, Dup }  from './mongodb/User'
+import { typeDefs, resolvers, User, UserSchema, Dup, Leader }  from './mongodb/User'
 import {GraphQLServer} from 'graphql-yoga';
 import cors from 'cors'
 import 'cross-fetch/polyfill';
@@ -51,15 +51,29 @@ const server = new GraphQLServer ({typeDefs , resolvers})
   server.express.use(passport.initialize());
   server.express.use(passport.session());
 
-	passport.serializeUser(function(user, done) {
-	  done(null, user.id);
+	passport.serializeUser(function(entity, done) {
+	  done(null, entity.id);
 	});
 
 	passport.deserializeUser(function(id, done) {
-	  User.findById(id, function(err, user) {
-	    done(err, user);
-	  });
+
+
+    User.findById(id, function(err, user) {
+      done(err, user);
+    });
+
 	});
+
+  passport.deserializeUser(function(id, done) {
+
+
+    Leader.findById(id, function(err, user) {
+      done(err, user);
+    });
+
+
+
+  });
 
   passport.use(new LocalStrategy(
 	  function(firstname, password, done) {
@@ -73,6 +87,7 @@ const server = new GraphQLServer ({typeDefs , resolvers})
 	      }
 	      return done(null, user);
 	    });
+
 	  }
 	));
 
@@ -96,10 +111,6 @@ server.express.get('/home', (req,res,next) => {
 server.express.get( '*', (req, res ,next) => {
 
 
-if (typeof window === 'undefined')
-{
-  global.window={}
-}
 
 
 	const sheetsRegistry = new SheetsRegistry();

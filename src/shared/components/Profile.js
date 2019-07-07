@@ -37,7 +37,7 @@ card:
 {
 	position: 'relative',
 	margin: 50,
-	height: 600,
+
 	width: '50%'
 }
 
@@ -69,33 +69,38 @@ constructor(props)
 
 }
 
+componentDidMount()
+{
+	  document.body.style.backgroundColor = "#f1f1f1"
+}
 
   render()
 	 {
 
 		 const { classes } = this.props;
 		 const {data} = this.state
+		 console.log(data.passport);
 		 	if (data.passport)
       {
       console.log(data.passport);
 		  return(
-										<Query query={FETCH_USER} variables={{id: data.passport.user}}>
+							<Query query={FETCH_USER} variables={{id: data.passport.user}}>
 									{
-									  ( {loading, error, data}) =>
+									  ({loading, error, data}) =>
 									  {
 									    if (loading) return 'Loading';
 									    if (error) return `Error ${error}`
 											this.props.addUser(data.fetchUser)
-									    return (<Grid container direction='row'>
+									    return (<Grid container fluid direction='row'>
 													<Grid item>
-													<Card className={classes.card} >
+													<Card className={classes.card} xs={12}>
 												    <Typography className = {classes.container}>
 															Hello {data.fetchUser.firstname}, you have {data.fetchUser.points} points accumulated!
 											       </Typography>
 														 </Card>
 														 </Grid>
 														 <Grid item>
-														 <Card className={classes.card}>
+														 <Card className={classes.card} xs= {12}>
 														 	Hello
 														 </Card>
 														 </Grid>

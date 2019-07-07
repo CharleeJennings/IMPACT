@@ -70,7 +70,7 @@ constructor(props)
 
 componentDidMount()
 {
-  document.body.style.backgroundColor = "white"
+  document.body.style.backgroundColor = "#f1f1f1"
 }
 
  handleChange = (event) =>
