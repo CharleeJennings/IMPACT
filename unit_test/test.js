@@ -1,5 +1,5 @@
 
-import Login from '../src/shared/components/Login'
+import Login from '../src/shared/components/Login-Student'
 import renderer from 'react-test-renderer';
 import React from 'react';
 const request = require('supertest');
