@@ -156,7 +156,7 @@ componentDidMount()
               if (loading) {this.props.history.push('/')}
 
                   return(
-                  <form method='post' onSubmit = {e =>
+                  <form onSubmit = {e =>
                     {e.preventDefault();  createUser({ variables:{firstname: this.state.firstname, lastname : this.state.lastname , email: this.state.email, password: this.state.password}  }); console.log(data); }}>
                       <Grid container justify='center' className={classes.container2}>
                         <Grid item>
