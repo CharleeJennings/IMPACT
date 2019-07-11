@@ -149,6 +149,7 @@ componentDidMount()
               {(createUser, {data,loading,error}) =>{
 
 
+<<<<<<< HEAD
               if (loading) {  return "Loading"; }
               console.log(data);
               if (data)
@@ -159,6 +160,10 @@ componentDidMount()
               }
               return(
                   <form  onSubmit = {e =>
+=======
+                  return(
+                  <form onSubmit = {e =>
+>>>>>>> e87a7c1e26880fe4b2a8912d668d6f2061f599a6
                     {e.preventDefault();  createUser({ variables:{firstname: this.state.firstname, lastname : this.state.lastname , email: this.state.email, password: this.state.password}  }); console.log(data); }}>
                       <Grid container justify='center' className={classes.container2}>
                         <Grid item>
