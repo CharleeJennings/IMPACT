@@ -9,7 +9,7 @@ import {addFirstname, addUser} from '../redux/action'
 import Typography from '@material-ui/core/Typography';
 import {graphql, Query} from 'react-apollo'
 import gql from 'graphql-tag'
-
+import Paper from '@material-ui/core/Paper';
 
 
 const FETCH_USER = gql`query FetchUser($id: ID!){
@@ -28,18 +28,28 @@ const styles = theme => ({
 
 container:
 {
-	position:'relative',
-	top: 50,
-	margin: 20,
+	height: '100vh'
+
 },
 
 card:
 {
-	position: 'relative',
-	margin: 50,
 
-	width: '50%'
-}
+
+
+},
+
+profile:
+{
+	height: 200
+
+
+
+},
+
+root: {
+	 flexGrow: 1,
+ },
 
 
 })
@@ -71,7 +81,7 @@ constructor(props)
 
 componentDidMount()
 {
-	  document.body.style.backgroundColor = "#f1f1f1"
+
 }
 
   render()
@@ -79,6 +89,8 @@ componentDidMount()
 
 		 const { classes } = this.props;
 		 const {data} = this.state
+
+
 		 console.log(data.passport);
 		 	if (data.passport)
       {
@@ -93,24 +105,43 @@ componentDidMount()
 											this.props.addUser(data.fetchUser)
 									    return (<Grid container fluid direction='row'>
 													<Grid item>
-													<Card className={classes.card} xs={12}>
+													<Paper xs={12}>
 												    <Typography className = {classes.container}>
 															Hello {data.fetchUser.firstname}, you have {data.fetchUser.points} points accumulated!
 											       </Typography>
-														 </Card>
+														 </Paper>
 														 </Grid>
 														 <Grid item>
 														 <Card className={classes.card} xs= {12}>
 														 	Hello
 														 </Card>
 														 </Grid>
-
 													 </Grid>)
 									  }
 									}
 									</Query>
 			         );
       }
+			else if(process.env.NODE_ENV == 'development')
+			{return (
+
+				<div className ={classes.root}>
+				<Grid container spacing ={16} alignItems='center' className={classes.container}>
+					<Grid item xs={6}>
+						<Paper>
+							Competion
+						</Paper>
+					</Grid>
+					<Grid item xs={6}>
+						 <Paper className = {classes.profile}>
+
+								Profile For Student
+
+						 </Paper>
+					</Grid>
+					 </Grid>
+				 </div>)}
+
 			else
       {
 				return (<h5>  You need to <a href='/'>log in</a> first! </h5>)

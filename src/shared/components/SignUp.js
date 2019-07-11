@@ -57,6 +57,7 @@ mutation(  $firstname: String!, $lastname: String!, $email: String!, $password: 
   createUser( firstname : $firstname, lastname : $lastname, email: $email, password : $password )
   {
     firstname
+    lastname
   }
 
 }
@@ -92,17 +93,11 @@ class SignUp extends React.Component
 
 componentDidMount()
 {
-    document.body.style.backgroundColor = "#f1f1f1"
+
 }
 
 
 
-   handleSubmit = () =>
-  {
-      this.setState({sub : true})
-      setTimeout( () => this.props.history.push('/'), 5000)
-
-  }
 
   handleChange(event)
   {
@@ -153,10 +148,17 @@ componentDidMount()
           <Mutation mutation = {ADD_USER}>
               {(createUser, {data,loading,error}) =>{
 
-              if (loading) {this.props.history.push('/')}
 
-                  return(
-                  <form method='post' onSubmit = {e =>
+              if (loading) {  return "Loading"; }
+              console.log(data);
+              if (data)
+              {
+                if (data.createUser)
+                {this.props.history.push('/')}
+                if (data.createUser == null) {return <h1> Duplicated Accounts </h1>}
+              }
+              return(
+                  <form  onSubmit = {e =>
                     {e.preventDefault();  createUser({ variables:{firstname: this.state.firstname, lastname : this.state.lastname , email: this.state.email, password: this.state.password}  }); console.log(data); }}>
                       <Grid container justify='center' className={classes.container2}>
                         <Grid item>
@@ -184,7 +186,7 @@ componentDidMount()
                           }
                           </Grid>
                           </Grid>
-                          <Button variant='contained' onClick = {this.handleSubmit} className = {classes.button} color="primary" type = 'submit'>
+                          <Button variant='contained' className = {classes.button} color="primary" type = 'submit'>
                           Submit
                           </Button>
                           </form>)

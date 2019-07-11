@@ -78,7 +78,7 @@ const UserSchema =mongoose.Schema({
 
 	});
 
-export var Dup = false
+
 
 LeaderSchema.methods.validPassword = function( pwd ) {
       return ( pwd == this.password );

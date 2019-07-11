@@ -5,7 +5,7 @@ import routes from '../shared/routes'
 import App from '../shared/App';
 import React from 'react'
 import mongoose from 'mongoose';
-import { typeDefs, resolvers, User, UserSchema, Dup, Leader }  from './mongodb/User'
+import { typeDefs, resolvers, User, UserSchema, Leader }  from './mongodb/User'
 import {GraphQLServer} from 'graphql-yoga';
 import cors from 'cors'
 import 'cross-fetch/polyfill';
@@ -173,6 +173,7 @@ const markup = renderToString(
 			<head>
 			<meta name="viewport" content="width=device-width, initial-scale=1">
       <style id="jss-server-side">${css}</style>
+      <style>  body { background-color : #f1f1f1} </style>
 			<title> I.M.P.A.C.T </title>
       <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
 			<script src = '/bundle.js' defer> </script>
