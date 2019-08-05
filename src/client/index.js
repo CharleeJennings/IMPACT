@@ -1,88 +1,41 @@
-import React, {useContext} from 'react';
-import { ApolloProvider } from 'react-apollo';
-import { hydrate } from 'react-dom';
+import React, { useContext } from "react";
+import { ApolloProvider } from "react-apollo";
+import { hydrate } from "react-dom";
 import ApolloClient from "apollo-boost";
-import App from '../shared/App.js';
-import {BrowserRouter} from 'react-router-dom';
-import JssProvider from 'react-jss/lib/JssProvider';
-import {
-  MuiThemeProvider,
-  createMuiTheme,
-  createGenerateClassName,
-} from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
-import red from '@material-ui/core/colors/red';
-import {store} from '../shared/redux/store'
-import {Provider} from 'react-redux'
-import {useTransition , animated} from 'react-spring'
-import {__RouterContext} from 'react-router'
+import App from "../shared/App.js";
+import { BrowserRouter } from "react-router-dom";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/styles";
 
+import { store } from "../shared/redux/store";
+import { Provider } from "react-redux";
+import { useTransition, animated } from "react-spring";
+import { __RouterContext } from "react-router";
+import theme from "../shared/components/Theme";
 
-const client = new ApolloClient({});
-
-
-class Main extends React.Component {
-  // Remove the server-side injected CSS.
-  componentDidMount() {
-     const jssStyles = document.getElementById('jss-server-side');
-     console.log(jssStyles);
-     if (jssStyles && jssStyles.parentNode) {
-       jssStyles.parentNode.removeChild(jssStyles);
-     }
-     const preloadedState = window.__PRELOADED_STATE__
-
-     // Allow the passed state to be garbage-collected
-     delete window.__PRELOADED_STATE__
-
-
-
-   }
-
-
-
-  render() {
-
-
-    return <App/>
-  }
-}
-
-
-
-const theme = createMuiTheme({
-  palette: {
-    primary: blue,
-    secondary: {main: '#FFFFFF'},
-    accent: red,
-    type: 'light',
-  },
-  typography:
-  {
-    useNextVariants: true,
-    fontFamily: ['Baloo Chettan','Raleway'].join(','),
-  }
+const client = new ApolloClient({
+  uri: "http://localhost:3000/graphql"
 });
 
+function Main() {
+  React.useEffect(() => {
+    const jssStyles = document.querySelector("#jss-server-side");
+    if (jssStyles) {
+      jssStyles.parentNode.removeChild(jssStyles);
+    }
+  }, []);
 
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <ApolloProvider client={client}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ApolloProvider>
+      </ThemeProvider>
+    </Provider>
+  );
+}
 
-
-const generateClassName = createGenerateClassName();
-
-hydrate(
-  <Provider store = {store}>
-	 <JssProvider generateClassName={generateClassName}>
-   <MuiThemeProvider theme={theme}>
-	<ApolloProvider client = {client}>
-
-	<BrowserRouter>
-
-			<Main />
-
-	</BrowserRouter>
-
-	</ApolloProvider>
-    </MuiThemeProvider>
-	 </JssProvider>
-    </Provider>,
-	 document.getElementById('app')
-)
+hydrate(<Main />, document.getElementById("app"));

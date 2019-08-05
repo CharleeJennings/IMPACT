@@ -1,211 +1,338 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
-import Card from '@material-ui/core/Card';
-import Grid from '@material-ui/core/Grid'
-import gql from 'graphql-tag'
-import {graphql, Mutation} from 'react-apollo'
-import red from '@material-ui/core/colors/red';
-import Input from '@material-ui/core/Input';
-import Error from '@material-ui/icons/Error'
-import DatePicker from 'pikaday-react-wrapper';
-import {Redirect, Route} from 'react-router'
+import React, { useState } from "react";
+import { withStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/styles";
+import Button from "@material-ui/core/Button";
+import PropTypes from "prop-types";
+import TextField from "@material-ui/core/TextField";
+import Card from "@material-ui/core/Card";
+import Grid from "@material-ui/core/Grid";
+import gql from "graphql-tag";
+import { graphql, Mutation } from "react-apollo";
+import red from "@material-ui/core/colors/red";
+import Input from "@material-ui/core/Input";
+import Error from "@material-ui/icons/Error";
+import { Redirect, Route } from "react-router";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import Fab from "@material-ui/core/Fab";
+import ArrowBack from "@material-ui/icons/ArrowBack";
+import MobileStepper from "@material-ui/core/MobileStepper";
+import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import SwipeableViews from "react-swipeable-views";
+import DatePickers from "./DateField";
 
-import window from 'global'
-
-
-
+////////////
+//Style
+////////////
 
 const styles = theme => ({
+  fields: {
+    padding: 15
+  },
+  root: {
+    width: "90%"
+  },
 
+  back: {
+    position: "relative",
+    left: -70,
+    top: 50
+  },
 
-card:
-{
-  minWidth: 275,
-  padding: 50,
-  width: 300,
-},
+  paper: {
+    minWidth: 400,
+    maxWidth: 400,
+    height: 200,
+    padding: 20
+  },
 
-button:
-{
+  button: {
+    margin: theme.spacing.unit
+  },
 
-    margin: theme.spacing.unit,
-},
+  container: {
+    marginTop: 100
+  },
 
-container:
-{
-  top: 250,
-  position: 'relative',
-},
+  container2: {
+    position: "relative"
+  },
 
-container2:
-{
-  position: 'relative',
-},
-
-
-
-})
-
-
-const ADD_USER = gql`
-
-mutation(  $firstname: String!, $lastname: String!, $email: String!, $password: String!)
-{
-  createUser( firstname : $firstname, lastname : $lastname, email: $email, password : $password )
-  {
-    firstname
-    lastname
+  step: {
+    minWidth: 350,
+    width: "90%",
+    maxWidth: 800,
+    backgroundColor: "transparent"
   }
-
-}
+});
+/////////////////////////////
+// GraphQL Add User Mutation
+////////////////////////////
+const ADD_USER = gql`
+  mutation(
+    $firstname: String!
+    $lastname: String!
+    $email: String!
+    $password: String!
+  ) {
+    createUser(
+      firstname: $firstname
+      lastname: $lastname
+      email: $email
+      password: $password
+    ) {
+      firstname
+      lastname
+    }
+  }
 `;
 
-function Compare(field1, field2)
-{
+///////////////////////
+//Stepper Functions
+///////////////////////
 
-  var length = field1.length
-
-  var buffer = field2.substring(0,length)
-
-  if (field1 === buffer )
-  {
-    return true
-  }
- else
- {
-    return false
- }
-
+function getSteps() {
+  return ["Name", "Email", "Pin", "Birthday", "Done"];
 }
 
-class SignUp extends React.Component
-{
-  constructor(props)
-  {
-    super(props)
-    this.state = {firstname: null , lastname: null, email: '', password: '', emailC: '' , passwordC: '', errorE: false, errorP: false, date : '',sub : false, redirect: false }
-    if (__isBrowser__)
-    console.log(window);
+function getStepContent(step) {
+  switch (step) {
+    case 0:
+      return "Please enter your full name";
+    case 1:
+      return "Please fill out your email";
+    case 2:
+      return "Confirm a pin.";
+    case 3:
+      return "We would like to know your birthday!";
+    default:
+      return "Review";
   }
-
-componentDidMount()
-{
-
 }
 
+//////////////////
+//Custom Code
+/////////////////
 
-
-
-  handleChange(event)
+const tutorialSteps = [
   {
-    const name = event.target.name
-
-    this.setState({
-      [name] : event.target.value,
-    })
-
-  if (name == 'emailC' || name == 'email')
+    label: "Name",
+    fields: [{ field: "Firstname" }, { field: "Lastname" }]
+  },
   {
-    if ( ! Compare(event.target.value , this.state.email))
-    {
-      this.setState({errorE: true})
-
-    }
-    else
-    {
-      this.setState({errorE: false})
-    }
+    label: "Email",
+    validation: true,
+    fields: [{ field: "Email" }, { field: "Confirm Email" }]
+  },
+  {
+    label: "Password",
+    validation: true,
+    fields: [{ field: "Password" }, { field: "Confirm Password" }]
   }
+];
 
-  if (name == 'passwordC' || name == 'password')
-  {
-    if ( ! Compare(event.target.value , this.state.password))
-    {
-      this.setState({errorP: true})
+function compare(field1, field2) {
+  var length = field1.length;
 
-    }
-    else
-    {
-      this.setState({errorP: false})
-    }
+  var buffer = field2.substring(0, length);
+
+  if (field1 === buffer) {
+    return true;
+  } else {
+    return false;
   }
-
-
-  }
-
-
-
-  render()
-  {
-    const {classes} = this.props;
-    const { date } = this.state;
-    return (
-         <Grid container  justify='center' className = {classes.container}>
-                       <Card className= {classes.card} raised >
-          <Mutation mutation = {ADD_USER}>
-              {(createUser, {data,loading,error}) =>{
-
-
-<<<<<<< HEAD
-              if (loading) {  return "Loading"; }
-              console.log(data);
-              if (data)
-              {
-                if (data.createUser)
-                {this.props.history.push('/')}
-                if (data.createUser == null) {return <h1> Duplicated Accounts </h1>}
-              }
-              return(
-                  <form  onSubmit = {e =>
-=======
-                  return(
-                  <form onSubmit = {e =>
->>>>>>> e87a7c1e26880fe4b2a8912d668d6f2061f599a6
-                    {e.preventDefault();  createUser({ variables:{firstname: this.state.firstname, lastname : this.state.lastname , email: this.state.email, password: this.state.password}  }); console.log(data); }}>
-                      <Grid container justify='center' className={classes.container2}>
-                        <Grid item>
-                          <TextField  name = "firstname" placeholder = "First Name" onChange={this.handleChange.bind(this)} value={this.state.name} autoFocus/>
-                        </Grid>
-                        <Grid item>
-                          <TextField name = "lastname" placeholder = "Last Name" onChange={this.handleChange.bind(this)} value={this.state.name}/>
-                          </Grid>
-                        <Grid item>
-                        <TextField name = "email" placeholder = "Email" onChange={this.handleChange.bind(this)} value={this.state.name}/>
-                        </Grid>
-                          <Grid item>
-                          <TextField name = "emailC" placeholder = "Confirm Email" onChange={this.handleChange.bind(this)} error={this.state.errorE} value={this.state.name}/>
-                          {
-                            this.state.errorE &&   <Error/>
-                          }
-                          </Grid>
-                          <Grid item>
-                          <TextField name = "password" placeholder = "Pin" onChange={this.handleChange.bind(this)} value={this.state.name}  inputProps= {{maxLength: "4"}}/>
-                          </Grid>
-                          <Grid item>
-                          <TextField name = "passwordC" placeholder = "Confirm Pin" onChange={this.handleChange.bind(this)} error={this.state.errorP} value={this.state.name} inputProps={{maxLength: "4" }}/>
-                          {
-                            this.state.errorP &&   <Error/>
-                          }
-                          </Grid>
-                          </Grid>
-                          <Button variant='contained' className = {classes.button} color="primary" type = 'submit'>
-                          Submit
-                          </Button>
-                          </form>)
-                        }
-                  }
-                </Mutation>
-                        </Card>
-                        </Grid>
-)
 }
+
+//////////////////////
+//Rendered Componenet
+//////////////////////
+
+function SignUp(props) {
+  const [student, setStudent] = React.useState();
+  const [animating, setAnimating] = React.useState(false);
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [skipped, setSkipped] = React.useState(new Set());
+  const steps = getSteps();
+  const maxSteps = tutorialSteps.length;
+
+  function handleStepChange(step) {
+    setActiveStep(step);
+  }
+  function isStepOptional(step) {
+    return step === 9;
+  }
+
+  function isStepSkipped(step) {
+    return skipped.has(step);
+  }
+
+  function handleNext() {
+    let newSkipped = skipped;
+
+    if (isStepSkipped(activeStep)) {
+      newSkipped = new Set(newSkipped.values());
+      newSkipped.delete(activeStep);
+    }
+
+    setActiveStep(prevActiveStep => prevActiveStep + 1);
+    setSkipped(newSkipped);
+  }
+
+  function handleBack() {
+    setActiveStep(prevActiveStep => prevActiveStep - 1);
+  }
+
+  function handleSkip() {
+    if (!isStepOptional(activeStep)) {
+      // You probably want to guard against something like this,
+      // it should never occur unless someone's actively trying to break something.
+      throw new Error("You can't skip a step that isn't optional.");
+    }
+
+    setActiveStep(prevActiveStep => prevActiveStep + 1);
+    setSkipped(prevSkipped => {
+      const newSkipped = new Set(prevSkipped.values());
+      newSkipped.add(activeStep);
+      return newSkipped;
+    });
+  }
+
+  function handleReset() {
+    setActiveStep(0);
+  }
+
+  const theme = useTheme();
+
+  const [firstname, setFirstname] = useState();
+
+  const { classes } = props;
+
+  return (
+    <Grid
+      container
+      alignContent="center"
+      alignItems="center"
+      direction="column"
+      className={classes.container}
+    >
+      <Stepper activeStep={activeStep} className={classes.step}>
+        {steps.map((label, index) => {
+          const stepProps = {};
+          const labelProps = {};
+          if (isStepOptional(index)) {
+            labelProps.optional = (
+              <Typography variant="caption">Optional</Typography>
+            );
+          }
+          if (isStepSkipped(index)) {
+            stepProps.completed = false;
+          }
+          return (
+            <Step key={label} {...stepProps}>
+              <StepLabel {...labelProps}>{label}</StepLabel>
+            </Step>
+          );
+        })}
+      </Stepper>
+      <Grid item xs={12}>
+        <Typography>{getStepContent(activeStep)}</Typography>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Fab className={classes.back} size="small" color="primary" href="/">
+          <ArrowBack />
+        </Fab>
+        <Paper className={classes.paper}>
+          <Mutation mutation={ADD_USER}>
+            {(createUser, { data, loading, error }) => {
+              return (
+                <form
+                  onSubmit={e => {
+                    e.preventDefault();
+                    createUser({
+                      variables: {
+                        firstname: this.state.firstname,
+                        lastname: this.state.lastname,
+                        email: this.state.email,
+                        password: this.state.password
+                      }
+                    });
+                    console.log(data);
+                  }}
+                >
+                  <SwipeableViews
+                    axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                    index={activeStep}
+                    onChangeIndex={handleStepChange}
+                    enableMouseEvents
+                  >
+                    {tutorialSteps.map((step, index) => (
+                      <div key={step.label}>
+                        {Math.abs(activeStep - index) <= 2 ? (
+                          <Grid
+                            container
+                            alignContent="center"
+                            alignItems="center"
+                            direction="column"
+                          >
+                            {step.fields.map((field, index) => (
+                              <Grid item xs={6} className={classes.fields}>
+                                <TextField label={field.field} />
+                              </Grid>
+                            ))}
+                          </Grid>
+                        ) : null}
+                      </div>
+                    ))}
+                    <DatePickers />
+                  </SwipeableViews>
+                </form>
+              );
+            }}
+          </Mutation>
+        </Paper>
+      </Grid>
+      <div style={{ margin: 30 }}>
+        {activeStep === steps.length ? (
+          <div>
+            <Button onClick={handleReset}>Submit</Button>
+          </div>
+        ) : (
+          <div>
+            <div>
+              <Button disabled={activeStep === 0} onClick={handleBack}>
+                Back
+              </Button>
+              {isStepOptional(activeStep) && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSkip}
+                >
+                  Skip
+                </Button>
+              )}
+
+              <Button variant="contained" color="primary" onClick={handleNext}>
+                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+    </Grid>
+  );
 }
 
 SignUp.propTypes = {
-  classes:PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  endpoint: "/"
 };
 
-export default graphql(ADD_USER, {name: 'createUser'})(withStyles(styles)(SignUp))
+export default graphql(ADD_USER, { name: "createUser" })(
+  withStyles(styles)(SignUp)
+);
