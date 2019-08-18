@@ -42,8 +42,8 @@ const styles = theme => ({
 function Profile_page(props) {
   const [dataP, setPropData] = useState({});
 
-  setPropData(props.staticContext);
-  setPropData(window.__INITIAL_DATA__);
+  setInterval(setPropData(props.staticContext), 5000);
+
   console.log(dataP + props.staticContext);
   const [fetchUser, { data, loading, error }] = useQuery(FETCH_USER, {
     ssr: false,

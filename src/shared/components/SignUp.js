@@ -206,16 +206,18 @@ function SignUp(props) {
   const { classes } = props;
 
   function handleSubmit() {
-    addStudent({
-      variables: {
-        firstname: form.firstname,
-        lastname: form.lastname,
-        email: form.email,
-        password: form.password,
-        birthday: date
-      }
-    });
-    console.log(date);
+    setTimeout(() => {
+      addStudent({
+        variables: {
+          firstname: form.firstname,
+          lastname: form.lastname,
+          email: form.email,
+          password: form.password,
+          birthday: date
+        }
+      });
+      location.href = "/";
+    }, 3000);
   }
 
   return (
