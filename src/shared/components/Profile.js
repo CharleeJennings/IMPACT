@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { graphql, Query } from "react-apollo";
 import gql from "graphql-tag";
 import Paper from "@material-ui/core/Paper";
+import { useLazyQuery, useQuery } from "@apollo/react-hooks";
 
 const FETCH_USER = gql`
   query FetchUser($id: ID!) {
@@ -38,79 +39,21 @@ const styles = theme => ({
   }
 });
 
-class Profile_page extends React.Component {
-  constructor(props) {
-    super(props);
-    let data;
-    if (__isBrowser__) {
-      data = window.__INITIAL_DATA__;
-      delete window.__INITIAL_DATA__;
-    } else {
-      data = props.staticContext;
-    }
+function Profile_page(props) {
+  const [dataP, setPropData] = useState({});
 
-    this.state = { data };
+  setPropData(props.staticContext);
+  setPropData(window.__INITIAL_DATA__);
+  console.log(dataP + props.staticContext);
+  const [fetchUser, { data, loading, error }] = useQuery(FETCH_USER, {
+    ssr: false,
+    variables: { id: dataP.passport.user }
+  });
+
+  if (loading) {
+    return <h1> Loading </h1>;
   }
-
-  componentDidMount() {}
-
-  render() {
-    const { classes } = this.props;
-    const { data } = this.state;
-    if (data.passport) {
-      return (
-        <Query query={FETCH_USER} variables={{ id: data.passport.user }}>
-          {({ loading, error, data }) => {
-            if (loading) return "Loading";
-            if (error) return `Error ${error}`;
-            this.props.addUser(data.fetchUser);
-            return (
-              <Grid container fluid direction="row">
-                <Grid item>
-                  <Paper xs={12}>
-                    <Typography className={classes.container}>
-                      Hello {data.fetchUser.firstname}, you have{" "}
-                      {data.fetchUser.points} points accumulated!
-                    </Typography>
-                  </Paper>
-                </Grid>
-                <Grid item>
-                  <Card className={classes.card} xs={12}>
-                    Hello
-                  </Card>
-                </Grid>
-              </Grid>
-            );
-          }}
-        </Query>
-      );
-    } else if (process.env.NODE_ENV == "development") {
-      return (
-        <div className={classes.root}>
-          <Grid
-            container
-            spacing={16}
-            alignItems="center"
-            className={classes.container}
-          >
-            <Grid item xs={6}>
-              <Paper>Competion</Paper>
-            </Grid>
-            <Grid item xs={6}>
-              <Paper className={classes.profile}>Profile For Student</Paper>
-            </Grid>
-          </Grid>
-        </div>
-      );
-    } else {
-      return (
-        <h5>
-          {" "}
-          You need to <a href="/">log in</a> first!{" "}
-        </h5>
-      );
-    }
-  }
+  return <h1>{dataP}</h1>;
 }
 
 Profile_page.propTypes = {

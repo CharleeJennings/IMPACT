@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { ApolloProvider } from "react-apollo";
+import { ApolloProvider } from "@apollo/react-hooks";
 import { hydrate } from "react-dom";
 import ApolloClient from "apollo-boost";
 import App from "../shared/App.js";
@@ -26,15 +26,15 @@ function Main() {
   }, []);
 
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <ApolloProvider client={client}>
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
           <BrowserRouter>
             <App />
           </BrowserRouter>
-        </ApolloProvider>
-      </ThemeProvider>
-    </Provider>
+        </ThemeProvider>
+      </Provider>
+    </ApolloProvider>
   );
 }
 

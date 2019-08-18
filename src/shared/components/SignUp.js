@@ -21,9 +21,9 @@ import Fab from "@material-ui/core/Fab";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import MobileStepper from "@material-ui/core/MobileStepper";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import DatePickers from "./DateField";
+import { useMutation } from "@apollo/react-hooks";
 
 ////////////
 //Style
@@ -78,12 +78,14 @@ const ADD_USER = gql`
     $lastname: String!
     $email: String!
     $password: String!
+    $birthday: Date!
   ) {
     createUser(
       firstname: $firstname
       lastname: $lastname
       email: $email
       password: $password
+      birthday: $birthday
     ) {
       firstname
       lastname
@@ -96,7 +98,7 @@ const ADD_USER = gql`
 ///////////////////////
 
 function getSteps() {
-  return ["Name", "Email", "Pin", "Birthday", "Done"];
+  return ["Name", "Email", "Pin", "Birthday", "Review"];
 }
 
 function getStepContent(step) {
@@ -104,36 +106,19 @@ function getStepContent(step) {
     case 0:
       return "Please enter your full name";
     case 1:
-      return "Please fill out your email";
+      return "Confirm a email";
     case 2:
       return "Confirm a pin.";
     case 3:
       return "We would like to know your birthday!";
     default:
-      return "Review";
+      return "Please review your information";
   }
 }
 
 //////////////////
 //Custom Code
 /////////////////
-
-const tutorialSteps = [
-  {
-    label: "Name",
-    fields: [{ field: "Firstname" }, { field: "Lastname" }]
-  },
-  {
-    label: "Email",
-    validation: true,
-    fields: [{ field: "Email" }, { field: "Confirm Email" }]
-  },
-  {
-    label: "Password",
-    validation: true,
-    fields: [{ field: "Password" }, { field: "Confirm Password" }]
-  }
-];
 
 function compare(field1, field2) {
   var length = field1.length;
@@ -147,69 +132,91 @@ function compare(field1, field2) {
   }
 }
 
+function Review(props) {
+  return (
+    <Grid
+      container
+      direction="column"
+      alignContent="center"
+      alignItems="center"
+    >
+      <Grid item>
+        <Typography>
+          Name: {props.firstname} {props.lastname}
+        </Typography>
+      </Grid>
+      <Grid item>
+        <Typography>Email: {props.email}</Typography>
+      </Grid>
+      <Grid item>
+        <Typography>Birthday: {props.birthday}</Typography>
+      </Grid>
+    </Grid>
+  );
+}
+
 //////////////////////
 //Rendered Componenet
 //////////////////////
 
 function SignUp(props) {
-  const [student, setStudent] = React.useState();
-  const [animating, setAnimating] = React.useState(false);
+  const [form, setValues] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: ""
+  });
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
-  const maxSteps = tutorialSteps.length;
+  const maxSteps = 4;
 
   function handleStepChange(step) {
     setActiveStep(step);
-  }
-  function isStepOptional(step) {
-    return step === 9;
-  }
-
-  function isStepSkipped(step) {
-    return skipped.has(step);
   }
 
   function handleNext() {
     let newSkipped = skipped;
 
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
     setActiveStep(prevActiveStep => prevActiveStep + 1);
-    setSkipped(newSkipped);
   }
 
   function handleBack() {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   }
 
-  function handleSkip() {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
-    setSkipped(prevSkipped => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  }
-
   function handleReset() {
     setActiveStep(0);
   }
 
+  const updateField = e => {
+    setValues({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const [addStudent, { data }] = useMutation(ADD_USER);
+
   const theme = useTheme();
 
-  const [firstname, setFirstname] = useState();
+  const [date, setDate] = React.useState(new Date("2014-08-18T21:11:54"));
 
   const { classes } = props;
+
+  function handleSubmit() {
+    addStudent({
+      variables: {
+        firstname: form.firstname,
+        lastname: form.lastname,
+        email: form.email,
+        password: form.password,
+        birthday: date
+      }
+    });
+    console.log(date);
+  }
 
   return (
     <Grid
@@ -223,14 +230,7 @@ function SignUp(props) {
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
-          if (isStepOptional(index)) {
-            labelProps.optional = (
-              <Typography variant="caption">Optional</Typography>
-            );
-          }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
+
           return (
             <Step key={label} {...stepProps}>
               <StepLabel {...labelProps}>{label}</StepLabel>
@@ -247,59 +247,98 @@ function SignUp(props) {
           <ArrowBack />
         </Fab>
         <Paper className={classes.paper}>
-          <Mutation mutation={ADD_USER}>
-            {(createUser, { data, loading, error }) => {
-              return (
-                <form
-                  onSubmit={e => {
-                    e.preventDefault();
-                    createUser({
-                      variables: {
-                        firstname: this.state.firstname,
-                        lastname: this.state.lastname,
-                        email: this.state.email,
-                        password: this.state.password
-                      }
-                    });
-                    console.log(data);
-                  }}
-                >
-                  <SwipeableViews
-                    axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-                    index={activeStep}
-                    onChangeIndex={handleStepChange}
-                    enableMouseEvents
-                  >
-                    {tutorialSteps.map((step, index) => (
-                      <div key={step.label}>
-                        {Math.abs(activeStep - index) <= 2 ? (
-                          <Grid
-                            container
-                            alignContent="center"
-                            alignItems="center"
-                            direction="column"
-                          >
-                            {step.fields.map((field, index) => (
-                              <Grid item xs={6} className={classes.fields}>
-                                <TextField label={field.field} />
-                              </Grid>
-                            ))}
-                          </Grid>
-                        ) : null}
-                      </div>
-                    ))}
-                    <DatePickers />
-                  </SwipeableViews>
-                </form>
-              );
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+
+              console.log(data);
             }}
-          </Mutation>
+          >
+            <SwipeableViews
+              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+              index={activeStep}
+              onChangeIndex={handleStepChange}
+              enableMouseEvents
+            >
+              <Grid container direction="column">
+                <Grid item xs={12}>
+                  <TextField
+                    label="Firstname"
+                    onChange={updateField}
+                    name="firstname"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    label="Lastname"
+                    onChange={updateField}
+                    name="lastname"
+                  />
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                alignContent="center"
+              >
+                <Grid item xs={6}>
+                  <TextField label="Email" />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    label="Confirm Email"
+                    onChange={updateField}
+                    name="email"
+                  />
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                alignContent="center"
+              >
+                <Grid item xs={3}>
+                  <TextField label="Pin" />
+                </Grid>
+                <Grid item xs={3}>
+                  <TextField
+                    label="Confirm Pin"
+                    name="password"
+                    onChange={updateField}
+                  />
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                alignContent="center"
+              >
+                <Grid item xs={12}>
+                  <DatePickers setDate={setDate} />
+                </Grid>
+              </Grid>
+              <Review
+                firstname={form.firstname}
+                lastname={form.lastname}
+                email={form.email}
+                birthday={date.toString()}
+              />
+            </SwipeableViews>
+          </form>
         </Paper>
       </Grid>
       <div style={{ margin: 30 }}>
-        {activeStep === steps.length ? (
+        {activeStep !== steps.length - 1 ? (
           <div>
-            <Button onClick={handleReset}>Submit</Button>
+            <Button disabled={activeStep === 0} onClick={handleBack}>
+              Back
+            </Button>
+            <Button variant="contained" color="primary" onClick={handleNext}>
+              Next
+            </Button>
           </div>
         ) : (
           <div>
@@ -307,18 +346,13 @@ function SignUp(props) {
               <Button disabled={activeStep === 0} onClick={handleBack}>
                 Back
               </Button>
-              {isStepOptional(activeStep) && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSkip}
-                >
-                  Skip
-                </Button>
-              )}
 
-              <Button variant="contained" color="primary" onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit}
+              >
+                Submit
               </Button>
             </div>
           </div>
@@ -329,10 +363,7 @@ function SignUp(props) {
 }
 
 SignUp.propTypes = {
-  classes: PropTypes.object.isRequired,
-  endpoint: "/"
+  classes: PropTypes.object.isRequired
 };
 
-export default graphql(ADD_USER, { name: "createUser" })(
-  withStyles(styles)(SignUp)
-);
+export default withStyles(styles)(SignUp);

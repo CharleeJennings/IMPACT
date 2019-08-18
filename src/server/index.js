@@ -9,7 +9,7 @@ import { typeDefs, resolvers, User, UserSchema, Leader } from "./mongodb/User";
 import { GraphQLServer } from "graphql-yoga";
 import cors from "cors";
 import "cross-fetch/polyfill";
-import { ApolloProvider } from "react-apollo";
+import { ApolloProvider } from "@apollo/react-hooks";
 import ApolloClient from "apollo-client";
 import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
@@ -37,7 +37,10 @@ mongoose.connect(
   "mongodb://Charles:ilovemychurch1@ds163822.mlab.com:63822/impact"
 );
 
-const server = new GraphQLServer({ typeDefs, resolvers });
+const server = new GraphQLServer({
+  typeDefs,
+  resolvers
+});
 
 server.express.use(flash());
 server.express.use(bodyParser.urlencoded({ extended: false }));
@@ -128,15 +131,15 @@ function handleRender(req, res) {
   });
 
   const SApp = (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <ApolloProvider client={client}>
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
           <StaticRouter location={req.url} context={req.session}>
             <App />
           </StaticRouter>
-        </ApolloProvider>
-      </ThemeProvider>
-    </Provider>
+        </ThemeProvider>
+      </Provider>
+    </ApolloProvider>
   );
 
   getDataFromTree(SApp).then(() => {

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcryptjs from "bcryptjs";
 import { GraphQLDate, GraphQLTime, GraphQLDateTime } from "graphql-iso-date";
+import { GraphQLScalarType } from "graphql";
 
 const typeDefs = `
 type Query
@@ -18,9 +19,9 @@ type User
 	password : String!
 	admin : Boolean
 	points : Int
-	birthday: String!
+	birthday: Date!
 }
-
+  scalar Date
 type Leader{
 
 
@@ -31,7 +32,7 @@ type Leader{
 }
 
 type Mutation{
-	createUser(firstname: String!, lastname: String!, email : String!, password: String!, admin: Boolean ,  points: Int) : User
+	createUser(firstname: String!, lastname: String!, email : String!, password: String!, admin: Boolean ,  points: Int, birthday: Date!) : User
 	updateAccess (id: ID!, accessCode : String!) : User
 	updateAdmin(id: ID!, admin: Boolean!) : User
 	deleteUser(id:ID!) : User
@@ -63,13 +64,21 @@ LeaderSchema.methods.validPassword = function(pwd) {
   return pwd == this.password;
 };
 UserSchema.methods.validPassword = function(pwd) {
-  return bcryptjs.compareSync(pwd, this.password);
+  return pwd == this.password;
+  //bcryptjs.compareSync(pwd, this.password);
 };
 const Leader = mongoose.model("Leaders", LeaderSchema);
 
 const User = mongoose.model("user", UserSchema);
 
 const resolvers = {
+  Date: new GraphQLScalarType({
+    name: "Date",
+    description: "A date and time, represented as an ISO-8601 string",
+    serialize: value => value.toISOString(),
+    parseValue: value => new Date(value),
+    parseLiteral: ast => new Date(ast.value)
+  }),
   Query: {
     users: () => User.find(),
     fetchUser: async (_, { id }) => {
@@ -82,7 +91,10 @@ const resolvers = {
   },
 
   Mutation: {
-    createUser: async (_, { firstname, lastname, email, password }) => {
+    createUser: async (
+      _,
+      { firstname, lastname, email, password, birthday }
+    ) => {
       var dup = false;
       await User.findOne(
         { firstname: firstname, lastname: lastname },
@@ -109,8 +121,9 @@ const resolvers = {
           firstname,
           lastname,
           email,
-          password: hash,
-          points: 0
+          password: password,
+          points: 0,
+          birthday
         });
         await user.save();
         return user;

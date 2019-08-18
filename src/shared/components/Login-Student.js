@@ -10,9 +10,6 @@ import Grid from "@material-ui/core/Grid";
 import Error from "@material-ui/icons/Error";
 
 const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit
-  },
   card: {
     minWidth: 205,
     width: 300,
