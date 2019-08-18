@@ -13,9 +13,7 @@ import { useTransition, animated } from "react-spring";
 import { __RouterContext } from "react-router";
 import theme from "../shared/components/Theme";
 
-const client = new ApolloClient({
-  uri: "http://localhost:3000/graphql"
-});
+const client = new ApolloClient({});
 
 function Main() {
   React.useEffect(() => {

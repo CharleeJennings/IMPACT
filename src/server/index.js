@@ -120,7 +120,7 @@ function handleRender(req, res) {
     // Remember that this is the interface the SSR server will use to connect to the
     // API server, so we need to ensure it isn't firewalled, etc
     link: createHttpLink({
-      uri: "http://localhost:3000/graphql",
+      uri: new SchemaLink({ UserSchema }),
       credentials: "same-origin",
       headers: {
         cookie: req.header("Cookie")
