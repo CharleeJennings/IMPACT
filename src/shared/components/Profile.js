@@ -39,21 +39,10 @@ const styles = theme => ({
   }
 });
 
-function Profile_page(props) {
-  const [dataP, setPropData] = useState({});
-
-  setInterval(setPropData(props.staticContext), 5000);
-
-  console.log(dataP + props.staticContext);
-  const [fetchUser, { data, loading, error }] = useQuery(FETCH_USER, {
-    ssr: false,
-    variables: { id: dataP.passport.user }
-  });
-
-  if (loading) {
-    return <h1> Loading </h1>;
+class Profile_page extends React.Component {
+  render() {
+    return <div> Profile Page</div>;
   }
-  return <h1>{dataP}</h1>;
 }
 
 Profile_page.propTypes = {

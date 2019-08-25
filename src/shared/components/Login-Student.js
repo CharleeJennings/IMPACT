@@ -10,6 +10,14 @@ import Grid from "@material-ui/core/Grid";
 import Error from "@material-ui/icons/Error";
 
 const styles = theme => ({
+  bg: {
+    position: "absolute",
+    float: "right",
+    top: 0,
+    height: "100%",
+    right: 0,
+    minHeight: 800
+  },
   card: {
     minWidth: 205,
     width: 300,
@@ -17,7 +25,9 @@ const styles = theme => ({
   },
   container: {
     position: "relative",
-    top: 150
+    top: 150,
+    margin: -100,
+    marginTop: -130
   },
   textField: {},
   dense: {
@@ -27,13 +37,19 @@ const styles = theme => ({
     width: 200
   },
   header: {
-    fontSize: 30
+    fontFamily: "Pacifico",
+    marginRight: 100
+  },
+  header2: {
+    fontFamily: "Pacifico",
+    marginRight: -25
   },
 
   tree: {
     width: 250,
     postion: "relative",
-    height: 250
+    height: 250,
+    marginRight: 50
   }
 });
 
@@ -59,66 +75,82 @@ class TextFields extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Grid
-        container
-        direction="column"
-        justify="space-evenly"
-        alignItems="center"
-        className={classes.container}
-      >
-        <Grid item>
-          <Typography className={classes.header}>
-            {" "}
-            IMPACT the next Generation{" "}
-          </Typography>
-        </Grid>
-        <Grid item>
-          <img src={"./images/Tree.svg"} className={classes.tree} />
-        </Grid>
-        <form noValidate autoComplete="off" method="post" action="/login">
-          <Grid container direction="column" justify="center">
-            <Card className={classes.card}>
-              <Grid item>
-                <TextField
-                  id="standard-name"
-                  label="Name"
-                  name="username"
-                  className={classes.textField}
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                  autoFocus
-                />
-              </Grid>
-              <Grid item>
-                <TextField
-                  id="standard-name"
-                  label="Password"
-                  name="password"
-                  className={classes.textField}
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                />
-              </Grid>
-            </Card>
+      <div>
+        <img src={"./images/ProfileBg.svg"} className={classes.bg} />
+        <Grid
+          container
+          direction="column"
+          justify="flex-start"
+          alignItems="flex-end"
+          className={classes.container}
+          spacing={5}
+        >
+          <Grid item>
+            <Typography
+              className={classes.header}
+              color="secondary"
+              variant="h2"
+            >
+              Impact
+            </Typography>
           </Grid>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            type="submit"
-          >
-            Log In
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            href="/signup"
-          >
-            Sign up
-          </Button>
-        </form>
-      </Grid>
+          <Grid item>
+            <img src={"./images/Tree.svg"} className={classes.tree} />
+          </Grid>
+          <Grid item>
+            <Typography
+              className={classes.header2}
+              variant="h3"
+              color="secondary"
+            >
+              The Next Generation
+            </Typography>
+          </Grid>
+          <form noValidate autoComplete="off" method="post" action="/login">
+            <Grid container direction="column" justify="center">
+              <Card className={classes.card}>
+                <Grid item>
+                  <TextField
+                    id="standard-name"
+                    label="Name"
+                    name="username"
+                    className={classes.textField}
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                    autoFocus
+                  />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    id="standard-name"
+                    label="Password"
+                    name="password"
+                    className={classes.textField}
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                  />
+                </Grid>
+              </Card>
+            </Grid>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              type="submit"
+            >
+              Log In
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              href="/signup"
+            >
+              Sign up
+            </Button>
+          </form>
+        </Grid>
+      </div>
     );
   }
 }

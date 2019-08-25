@@ -221,145 +221,153 @@ function SignUp(props) {
   }
 
   return (
-    <Grid
-      container
-      alignContent="center"
-      alignItems="center"
-      direction="column"
-      className={classes.container}
-    >
-      <Stepper activeStep={activeStep} className={classes.step}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
+    <Grid container>
+      <Grid item>
+        <Grid
+          container
+          alignContent="center"
+          alignItems="center"
+          direction="column"
+          className={classes.container}
+        >
+          <Stepper activeStep={activeStep} className={classes.step}>
+            {steps.map((label, index) => {
+              const stepProps = {};
+              const labelProps = {};
 
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-      <Grid item xs={12}>
-        <Typography>{getStepContent(activeStep)}</Typography>
-      </Grid>
+              return (
+                <Step key={label} {...stepProps}>
+                  <StepLabel {...labelProps}>{label}</StepLabel>
+                </Step>
+              );
+            })}
+          </Stepper>
+          <Grid item xs={12}>
+            <Typography>{getStepContent(activeStep)}</Typography>
+          </Grid>
 
-      <Grid item xs={12}>
-        <Fab className={classes.back} size="small" color="primary" href="/">
-          <ArrowBack />
-        </Fab>
-        <Paper className={classes.paper}>
-          <form
-            onSubmit={e => {
-              e.preventDefault();
+          <Grid item xs={12}>
+            <Fab className={classes.back} size="small" color="primary" href="/">
+              <ArrowBack />
+            </Fab>
+            <Paper className={classes.paper}>
+              <form
+                onSubmit={e => {
+                  e.preventDefault();
 
-              console.log(data);
-            }}
-          >
-            <SwipeableViews
-              axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-              index={activeStep}
-              onChangeIndex={handleStepChange}
-              enableMouseEvents
-            >
-              <Grid container direction="column">
-                <Grid item xs={12}>
-                  <TextField
-                    label="Firstname"
-                    onChange={updateField}
-                    name="firstname"
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    label="Lastname"
-                    onChange={updateField}
-                    name="lastname"
-                  />
-                </Grid>
-              </Grid>
-              <Grid
-                container
-                direction="column"
-                alignItems="center"
-                alignContent="center"
+                  console.log(data);
+                }}
               >
-                <Grid item xs={6}>
-                  <TextField label="Email" />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    label="Confirm Email"
-                    onChange={updateField}
-                    name="email"
+                <SwipeableViews
+                  axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                  index={activeStep}
+                  onChangeIndex={handleStepChange}
+                  enableMouseEvents
+                >
+                  <Grid container direction="column">
+                    <Grid item xs={12}>
+                      <TextField
+                        label="Firstname"
+                        onChange={updateField}
+                        name="firstname"
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField
+                        label="Lastname"
+                        onChange={updateField}
+                        name="lastname"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    container
+                    direction="column"
+                    alignItems="center"
+                    alignContent="center"
+                  >
+                    <Grid item xs={6}>
+                      <TextField label="Email" />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField
+                        label="Confirm Email"
+                        onChange={updateField}
+                        name="email"
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    container
+                    direction="column"
+                    alignItems="center"
+                    alignContent="center"
+                  >
+                    <Grid item xs={3}>
+                      <TextField label="Pin" />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <TextField
+                        label="Confirm Pin"
+                        name="password"
+                        onChange={updateField}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    container
+                    direction="column"
+                    alignItems="center"
+                    alignContent="center"
+                  >
+                    <Grid item xs={12}>
+                      <DatePickers setDate={setDate} />
+                    </Grid>
+                  </Grid>
+                  <Review
+                    firstname={form.firstname}
+                    lastname={form.lastname}
+                    email={form.email}
+                    birthday={date.toString()}
                   />
-                </Grid>
-              </Grid>
-              <Grid
-                container
-                direction="column"
-                alignItems="center"
-                alignContent="center"
-              >
-                <Grid item xs={3}>
-                  <TextField label="Pin" />
-                </Grid>
-                <Grid item xs={3}>
-                  <TextField
-                    label="Confirm Pin"
-                    name="password"
-                    onChange={updateField}
-                  />
-                </Grid>
-              </Grid>
-              <Grid
-                container
-                direction="column"
-                alignItems="center"
-                alignContent="center"
-              >
-                <Grid item xs={12}>
-                  <DatePickers setDate={setDate} />
-                </Grid>
-              </Grid>
-              <Review
-                firstname={form.firstname}
-                lastname={form.lastname}
-                email={form.email}
-                birthday={date.toString()}
-              />
-            </SwipeableViews>
-          </form>
-        </Paper>
-      </Grid>
-      <div style={{ margin: 30 }}>
-        {activeStep !== steps.length - 1 ? (
-          <div>
-            <Button disabled={activeStep === 0} onClick={handleBack}>
-              Back
-            </Button>
-            <Button variant="contained" color="primary" onClick={handleNext}>
-              Next
-            </Button>
+                </SwipeableViews>
+              </form>
+            </Paper>
+          </Grid>
+          <div style={{ margin: 30 }}>
+            {activeStep !== steps.length - 1 ? (
+              <div>
+                <Button disabled={activeStep === 0} onClick={handleBack}>
+                  Back
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                >
+                  Next
+                </Button>
+              </div>
+            ) : (
+              <div>
+                <div>
+                  <Button disabled={activeStep === 0} onClick={handleBack}>
+                    Back
+                  </Button>
+
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
-        ) : (
-          <div>
-            <div>
-              <Button disabled={activeStep === 0} onClick={handleBack}>
-                Back
-              </Button>
-
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSubmit}
-              >
-                Submit
-              </Button>
-            </div>
-          </div>
-        )}
-      </div>
+        </Grid>
+      </Grid>
     </Grid>
   );
 }

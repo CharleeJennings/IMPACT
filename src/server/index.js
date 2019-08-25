@@ -177,7 +177,7 @@ function handleRender(req, res) {
 server.express.get("*", handleRender);
 
 function renderFullPage(content, css, req, preloadedState) {
-  return ` <!DOCTYPE html>
+  return `<!DOCTYPE html>
     <html lang="en">
       <head>
     	<title> I.M.P.A.C.T </title>
@@ -189,6 +189,7 @@ function renderFullPage(content, css, req, preloadedState) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <!-- Fonts to support Material Design -->
           <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
       </head>
       <body>
         <div id="app">${content}</div>
