@@ -24,12 +24,18 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import SwipeableViews from "react-swipeable-views";
 import DatePickers from "./DateField";
 import { useMutation } from "@apollo/react-hooks";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 ////////////
 //Style
 ////////////
 
 const styles = theme => ({
+  bg: {
+    position: "absolute",
+    width: "100%",
+    height: "100%"
+  },
   fields: {
     padding: 15
   },
@@ -133,26 +139,28 @@ function compare(field1, field2) {
 }
 
 function Review(props) {
-  return (
-    <Grid
-      container
-      direction="column"
-      alignContent="center"
-      alignItems="center"
-    >
-      <Grid item>
-        <Typography>
-          Name: {props.firstname} {props.lastname}
-        </Typography>
+  if (props.loading) return <CircularProgress color="secondary" />;
+  else
+    return (
+      <Grid
+        container
+        direction="column"
+        alignContent="center"
+        alignItems="center"
+      >
+        <Grid item>
+          <Typography>
+            Name: {props.firstname} {props.lastname}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography>Email: {props.email}</Typography>
+        </Grid>
+        <Grid item>
+          <Typography>Birthday: {props.birthday}</Typography>
+        </Grid>
       </Grid>
-      <Grid item>
-        <Typography>Email: {props.email}</Typography>
-      </Grid>
-      <Grid item>
-        <Typography>Birthday: {props.birthday}</Typography>
-      </Grid>
-    </Grid>
-  );
+    );
 }
 
 //////////////////////
@@ -166,7 +174,7 @@ function SignUp(props) {
     email: "",
     password: ""
   });
-
+  const [loading, setLoading] = useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
@@ -206,6 +214,7 @@ function SignUp(props) {
   const { classes } = props;
 
   function handleSubmit() {
+    setLoading(true); //Fake Auth.
     setTimeout(() => {
       addStudent({
         variables: {
@@ -221,154 +230,166 @@ function SignUp(props) {
   }
 
   return (
-    <Grid container>
-      <Grid item>
-        <Grid
-          container
-          alignContent="center"
-          alignItems="center"
-          direction="column"
-          className={classes.container}
-        >
-          <Stepper activeStep={activeStep} className={classes.step}>
-            {steps.map((label, index) => {
-              const stepProps = {};
-              const labelProps = {};
+    <div>
+      <img src={"./images/SignUpBg.svg"} className={classes.bg} />
+      <Grid container>
+        <Grid item xs={6} />
+        <Grid item xs={6}>
+          <Paper className={classes.container2}>
+            <Grid
+              container
+              alignContent="center"
+              alignItems="center"
+              direction="column"
+              className={classes.container}
+            >
+              <Stepper activeStep={activeStep} className={classes.step}>
+                {steps.map((label, index) => {
+                  const stepProps = {};
+                  const labelProps = {};
 
-              return (
-                <Step key={label} {...stepProps}>
-                  <StepLabel {...labelProps}>{label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
-          <Grid item xs={12}>
-            <Typography>{getStepContent(activeStep)}</Typography>
-          </Grid>
+                  return (
+                    <Step key={label} {...stepProps}>
+                      <StepLabel {...labelProps}>{label}</StepLabel>
+                    </Step>
+                  );
+                })}
+              </Stepper>
+              <Grid item xs={12}>
+                <Typography>{getStepContent(activeStep)}</Typography>
+              </Grid>
 
-          <Grid item xs={12}>
-            <Fab className={classes.back} size="small" color="primary" href="/">
-              <ArrowBack />
-            </Fab>
-            <Paper className={classes.paper}>
-              <form
-                onSubmit={e => {
-                  e.preventDefault();
-
-                  console.log(data);
-                }}
-              >
-                <SwipeableViews
-                  axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-                  index={activeStep}
-                  onChangeIndex={handleStepChange}
-                  enableMouseEvents
-                >
-                  <Grid container direction="column">
-                    <Grid item xs={12}>
-                      <TextField
-                        label="Firstname"
-                        onChange={updateField}
-                        name="firstname"
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        label="Lastname"
-                        onChange={updateField}
-                        name="lastname"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid
-                    container
-                    direction="column"
-                    alignItems="center"
-                    alignContent="center"
-                  >
-                    <Grid item xs={6}>
-                      <TextField label="Email" />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        label="Confirm Email"
-                        onChange={updateField}
-                        name="email"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid
-                    container
-                    direction="column"
-                    alignItems="center"
-                    alignContent="center"
-                  >
-                    <Grid item xs={3}>
-                      <TextField label="Pin" />
-                    </Grid>
-                    <Grid item xs={3}>
-                      <TextField
-                        label="Confirm Pin"
-                        name="password"
-                        onChange={updateField}
-                      />
-                    </Grid>
-                  </Grid>
-                  <Grid
-                    container
-                    direction="column"
-                    alignItems="center"
-                    alignContent="center"
-                  >
-                    <Grid item xs={12}>
-                      <DatePickers setDate={setDate} />
-                    </Grid>
-                  </Grid>
-                  <Review
-                    firstname={form.firstname}
-                    lastname={form.lastname}
-                    email={form.email}
-                    birthday={date.toString()}
-                  />
-                </SwipeableViews>
-              </form>
-            </Paper>
-          </Grid>
-          <div style={{ margin: 30 }}>
-            {activeStep !== steps.length - 1 ? (
-              <div>
-                <Button disabled={activeStep === 0} onClick={handleBack}>
-                  Back
-                </Button>
-                <Button
-                  variant="contained"
+              <Grid item xs={12}>
+                <Fab
+                  className={classes.back}
+                  size="small"
                   color="primary"
-                  onClick={handleNext}
+                  href="/"
                 >
-                  Next
-                </Button>
-              </div>
-            ) : (
-              <div>
-                <div>
-                  <Button disabled={activeStep === 0} onClick={handleBack}>
-                    Back
-                  </Button>
+                  <ArrowBack />
+                </Fab>
+                <Paper className={classes.paper}>
+                  <form
+                    onSubmit={e => {
+                      e.preventDefault();
 
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSubmit}
+                      console.log(data);
+                    }}
                   >
-                    Submit
-                  </Button>
-                </div>
+                    <SwipeableViews
+                      axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                      index={activeStep}
+                      onChangeIndex={handleStepChange}
+                      enableMouseEvents
+                    >
+                      <Grid container direction="column">
+                        <Grid item xs={12}>
+                          <TextField
+                            label="Firstname"
+                            onChange={updateField}
+                            name="firstname"
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Lastname"
+                            onChange={updateField}
+                            name="lastname"
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid
+                        container
+                        direction="column"
+                        alignItems="center"
+                        alignContent="center"
+                      >
+                        <Grid item xs={6}>
+                          <TextField label="Email" />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Confirm Email"
+                            onChange={updateField}
+                            name="email"
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid
+                        container
+                        direction="column"
+                        alignItems="center"
+                        alignContent="center"
+                      >
+                        <Grid item xs={3}>
+                          <TextField label="Pin" />
+                        </Grid>
+                        <Grid item xs={3}>
+                          <TextField
+                            label="Confirm Pin"
+                            name="password"
+                            onChange={updateField}
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid
+                        container
+                        direction="column"
+                        alignItems="center"
+                        alignContent="center"
+                      >
+                        <Grid item xs={12}>
+                          <DatePickers setDate={setDate} />
+                        </Grid>
+                      </Grid>
+                      <Review
+                        firstname={form.firstname}
+                        lastname={form.lastname}
+                        email={form.email}
+                        birthday={date.toString()}
+                        loading={loading}
+                      />
+                    </SwipeableViews>
+                  </form>
+                </Paper>
+              </Grid>
+              <div style={{ margin: 30 }}>
+                {activeStep !== steps.length - 1 ? (
+                  <div>
+                    <Button disabled={activeStep === 0} onClick={handleBack}>
+                      Back
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                    >
+                      Next
+                    </Button>
+                  </div>
+                ) : (
+                  <div>
+                    <div>
+                      <Button disabled={activeStep === 0} onClick={handleBack}>
+                        Back
+                      </Button>
+
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                      >
+                        Submit
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </Grid>
+          </Paper>
         </Grid>
       </Grid>
-    </Grid>
+    </div>
   );
 }
 

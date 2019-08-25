@@ -10,6 +10,9 @@ import Grid from "@material-ui/core/Grid";
 import Error from "@material-ui/icons/Error";
 
 const styles = theme => ({
+  button: {
+    margin: 10
+  },
   bg: {
     position: "absolute",
     float: "right",
