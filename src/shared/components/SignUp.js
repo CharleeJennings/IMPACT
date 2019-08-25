@@ -150,14 +150,21 @@ function Review(props) {
       >
         <Grid item>
           <Typography>
-            Name: {props.firstname} {props.lastname}
+            Name:
+            {props.firstname} {props.lastname}
           </Typography>
         </Grid>
         <Grid item>
-          <Typography>Email: {props.email}</Typography>
+          <Typography>
+            Email:
+            {props.email}
+          </Typography>
         </Grid>
         <Grid item>
-          <Typography>Birthday: {props.birthday}</Typography>
+          <Typography>
+            Birthday:
+            {props.birthday}
+          </Typography>
         </Grid>
       </Grid>
     );

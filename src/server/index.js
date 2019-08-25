@@ -9,7 +9,7 @@ import { typeDefs, resolvers, User, UserSchema, Leader } from "./mongodb/User";
 import { GraphQLServer } from "graphql-yoga";
 import cors from "cors";
 import "cross-fetch/polyfill";
-import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloProvider } from "@apollo/react-common";
 import ApolloClient from "apollo-client";
 import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
