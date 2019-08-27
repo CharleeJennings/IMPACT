@@ -65,7 +65,8 @@ const styles = theme => ({
   },
 
   container2: {
-    position: "relative"
+    position: "relative",
+    height: "100%"
   },
 
   step: {
@@ -151,12 +152,14 @@ function Review(props) {
         <Grid item>
           <Typography>
             Name:
+            <br />
             {props.firstname} {props.lastname}
           </Typography>
         </Grid>
         <Grid item>
           <Typography>
             Email:
+            <br />
             {props.email}
           </Typography>
         </Grid>
@@ -239,10 +242,10 @@ function SignUp(props) {
   return (
     <div>
       <img src={"./images/SignUpBg.svg"} className={classes.bg} />
-      <Grid container>
+      <Grid container className={classes.container2}>
         <Grid item xs={6} />
         <Grid item xs={6}>
-          <Paper className={classes.container2}>
+          <Paper>
             <Grid
               container
               alignContent="center"

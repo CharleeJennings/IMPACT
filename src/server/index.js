@@ -30,7 +30,6 @@ import ReactDOMServer from "react-dom/server";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../shared/components/Theme";
 import { getDataFromTree } from "react-apollo";
-
 var LocalStrategy = passportLocal.Strategy;
 
 mongoose.connect(
