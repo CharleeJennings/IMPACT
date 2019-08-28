@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "webpack -w & nodemon index.js",
     "test": "jest --updateSnapshot",
-    "start": "webpack -w & nodemon server.js",
-    "build": "echo hello"
+    "start": "node index.js",
+    "build": "webpack "
   },
   "babel": {
     "presets": [

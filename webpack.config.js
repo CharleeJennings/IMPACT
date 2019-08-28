@@ -93,7 +93,7 @@ var serverConfig = {
   externals: [nodeExternals()],
   output: {
     path: __dirname,
-    filename: "server.js",
+    filename: "index.js",
     publicPath: "/"
   },
   module: {

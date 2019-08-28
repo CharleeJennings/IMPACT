@@ -34,7 +34,8 @@ const styles = theme => ({
   bg: {
     position: "absolute",
     width: "100%",
-    height: "100%"
+    height: "100%",
+    zIndex: -1
   },
   fields: {
     padding: 15
@@ -48,30 +49,38 @@ const styles = theme => ({
     left: -70,
     top: 50
   },
+  card: {
+    margin: 30
+  },
 
+  paper1: {
+    maxWidth: 600,
+    minWidth: 200,
+    height: "100%",
+    padding: 95
+  },
+  innerGrid: {},
   paper: {
-    minWidth: 400,
-    maxWidth: 400,
-    height: 200,
-    padding: 20
+    height: 250
   },
-
   button: {
-    margin: theme.spacing.unit
+    margin: 10
   },
-
+  content: {
+    height: "100%"
+  },
   container: {
-    marginTop: 100
+    padding: 40,
+    height: "100vh"
   },
 
   container2: {
-    position: "relative",
-    height: "100%"
+    position: "relative"
   },
 
   step: {
     minWidth: 350,
-    width: "90%",
+
     maxWidth: 800,
     backgroundColor: "transparent"
   }
@@ -242,17 +251,17 @@ function SignUp(props) {
   return (
     <div>
       <img src={"./images/SignUpBg.svg"} className={classes.bg} />
-      <Grid container className={classes.container2}>
+      <Grid container className={classes.container}>
         <Grid item xs={6} />
         <Grid item xs={6}>
-          <Paper>
-            <Grid
-              container
-              alignContent="center"
-              alignItems="center"
-              direction="column"
-              className={classes.container}
-            >
+          <Grid
+            container
+            alignContent="center"
+            alignItems="center"
+            direction="column"
+            className={classes.content}
+          >
+            <Paper className={classes.paper1}>
               <Stepper activeStep={activeStep} className={classes.step}>
                 {steps.map((label, index) => {
                   const stepProps = {};
@@ -266,7 +275,9 @@ function SignUp(props) {
                 })}
               </Stepper>
               <Grid item xs={12}>
-                <Typography>{getStepContent(activeStep)}</Typography>
+                <Typography align="center">
+                  {getStepContent(activeStep)}
+                </Typography>
               </Grid>
 
               <Grid item xs={12}>
@@ -292,7 +303,13 @@ function SignUp(props) {
                       onChangeIndex={handleStepChange}
                       enableMouseEvents
                     >
-                      <Grid container direction="column">
+                      <Grid
+                        container
+                        direction="column"
+                        alignItems="center"
+                        alignContent="center"
+                        className={classes.innerGrid}
+                      >
                         <Grid item xs={12}>
                           <TextField
                             label="Firstname"
@@ -300,7 +317,7 @@ function SignUp(props) {
                             name="firstname"
                           />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
                           <TextField
                             label="Lastname"
                             onChange={updateField}
@@ -395,8 +412,8 @@ function SignUp(props) {
                   </div>
                 )}
               </div>
-            </Grid>
-          </Paper>
+            </Paper>
+          </Grid>
         </Grid>
       </Grid>
     </div>
