@@ -113,7 +113,7 @@ const resolvers = {
             " " +
             lastname
         );
-        return null;
+        return user;
       } else {
         var salt = bcryptjs.genSaltSync(10);
         var hash = bcryptjs.hashSync(password, salt);

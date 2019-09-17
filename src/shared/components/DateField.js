@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 export default function DatePickers(props) {
   // The first commit of Material-UI
   const [selectedDate, setSelectedDate] = React.useState(
-    new Date("2014-08-18T21:11:54")
+    new Date()
   );
 
   const classes = useStyles();
@@ -28,6 +28,7 @@ export default function DatePickers(props) {
   function handleDateChange(date) {
     setSelectedDate(date);
     props.setDate(date);
+    props.setAuthen(false)
   }
 
   return (

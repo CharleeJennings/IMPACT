@@ -1,7 +1,6 @@
 import express from "express";
 import { renderToString } from "react-dom/server";
 import { matchPath, StaticRouter } from "react-router-dom";
-import routes from "../shared/routes";
 import App from "../shared/App";
 import React from "react";
 import mongoose from "mongoose";
@@ -20,16 +19,14 @@ import bodyParser from "body-parser";
 import flash from "connect-flash";
 import serialize from "serialize-javascript";
 import { SchemaLink } from "apollo-link-schema";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import ReactDOM from "react-dom";
 import { store } from "../shared/redux/store";
 import { Provider } from "react-redux";
-import { reducer } from "../shared/redux/reducer";
 import { ThemeProvider, ServerStyleSheets } from "@material-ui/styles";
 import ReactDOMServer from "react-dom/server";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../shared/components/Theme";
 import { getDataFromTree } from "react-apollo";
+
+
 var LocalStrategy = passportLocal.Strategy;
 
 mongoose.connect(

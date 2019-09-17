@@ -7,7 +7,8 @@
     "dev": "webpack -w & nodemon index.js",
     "test": "jest --updateSnapshot",
     "start": "node index.js",
-    "build": "webpack "
+    "deploy":"now ./out --static --no-clipboard --token=bLK8hTc0N5LVkLgISEf2BcjW --public",
+    "build": "webpack"
   },
   "babel": {
     "presets": [
@@ -64,7 +65,7 @@
     "@material-ui/styles": "^4.2.0",
     "animejs": "^2.2.0",
     "apollo-boost": "^0.1.23",
-    "apollo-client": "^2.5.1",
+    "apollo-client": "^2.6.4",
     "apollo-link-http": "^1.5.9",
     "apollo-link-schema": "^1.1.4",
     "asset-require-hook": "^1.2.0",
@@ -76,8 +77,10 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.5",
     "date-fns": "^2.0.0-beta.2",
+    "eslint-plugin-react-hooks": "^2.0.1",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "final-form": "^4.18.5",
     "global": "^4.4.0",
     "graphql": "^14.4.2",
     "graphql-iso-date": "^3.6.1",
@@ -95,6 +98,7 @@
     "react": "^16.8.6",
     "react-apollo": "^2.3.3",
     "react-dom": "^16.8.6",
+    "react-final-form-hooks": "^2.0.1",
     "react-jss": "^8.6.1",
     "react-multi-carousel": "^2.1.1",
     "react-redux": "^7.0.3",
