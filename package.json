@@ -7,7 +7,7 @@
     "dev": "webpack -w & nodemon index.js",
     "test": "jest --updateSnapshot",
     "start": "node index.js",
-    "deploy":"now ./out --static --no-clipboard --token=bLK8hTc0N5LVkLgISEf2BcjW --public",
+    "deploy": "now ./out --static --no-clipboard --token=bLK8hTc0N5LVkLgISEf2BcjW --public",
     "build": "webpack"
   },
   "babel": {
@@ -46,6 +46,7 @@
     "image-webpack-loader": "^4.6.0",
     "jest": "^24.7.1",
     "mini-css-extract-plugin": "^0.4.5",
+    "now": "^16.2.0",
     "react-alice-carousel": "^1.15.2",
     "react-test-renderer": "^16.8.6",
     "style-loader": "^0.22.1",
