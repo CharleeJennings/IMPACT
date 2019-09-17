@@ -7,7 +7,7 @@
     "dev": "webpack -w & nodemon index.js",
     "test": "jest --updateSnapshot",
     "start": "node index.js",
-    "deploy": "now ./out --static --no-clipboard --token=bLK8hTc0N5LVkLgISEf2BcjW --public",
+    "deploy": "curl -X POST https://api.zeit.co/v1/integrations/deploy/QmcJD56Yyk5fEo4SXb6dD5vc8ERPtoDW8c5TxLBoJmx6M1/7m56IyF5fr",
     "build": "webpack"
   },
   "babel": {
