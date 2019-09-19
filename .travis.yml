@@ -1,14 +1,13 @@
 langauge: node_js
 node_js:
-- stable
+  - stable
 cache:
   directories:
-  - node_modules
+    - node_modules
 before_install:
-- npm i travis webpack now
+  - npm i travis webpack now
 script:
-- npm test
-- npm run 
+  - npm test
 deploy:
   provider: script
   script: npm run deploy
