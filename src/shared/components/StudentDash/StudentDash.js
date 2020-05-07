@@ -14,6 +14,7 @@ import FadeIn from "react-fade-in";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 import {Hidden} from "@material-ui/core";
+import Bg from "../../../../public/images/Tree.svg";
 
 const useStyles = makeStyles((theme) => ({
 	card: {
@@ -31,7 +32,32 @@ const useStyles = makeStyles((theme) => ({
 			paddingLeft: 300,
 			paddingTop: 85,
 		},
-		paddingTop: 40,
+		paddingTop: 30,
+	},
+	students: {
+		[theme.breakpoints.up("md")]: {
+			paddingTop: 100,
+		},
+		width: "100%",
+		maxWidth: 700,
+		paddingLeft: 30,
+		paddingRight: 30,
+		paddingTop: 25,
+	},
+	tree: {
+		[theme.breakpoints.up("md")]: {
+			paddingLeft: 300,
+		},
+		backgroundImage: `url(${Bg})`,
+		height: 400,
+		width: "100%",
+		bottom: 0,
+		backgroundRepeat: "no-repeat",
+		position: "absolute",
+		backgroundPosition: "50% -40%",
+		opacity: 0.2,
+		backgroundSize: "600px 500px",
+		zIndex: -1,
 	},
 }));
 
@@ -58,7 +84,7 @@ function StudentDash(props) {
 								}}>
 								<Profile user={authUser.uid} name={authUser.displayName} />
 								<Grid container direction="column-reverse" alignItems="center" justify="flex-end">
-									<Grid item xs={12} style={{width: "100%", paddingTop: "calc(100vh - 350px)"}}>
+									<Grid item xs={12} style={{width: "100%", paddingTop: "calc(100vh - 425px)"}}>
 										<Button style={{width: "100%"}} variant="contained" color="secondary" onClick={props.firebase.doSignOut}>
 											Sign out
 										</Button>
@@ -79,10 +105,12 @@ function StudentDash(props) {
 									Check out other students progress below!
 								</Typography>
 							</Grid>
-							<Grid item style={{paddingTop: 100, width: "100%", maxWidth: 700, paddingLeft: 30, paddingRight: 30}}>
+							<Grid item className={classes.students}>
 								<TopStudent />
 							</Grid>
 						</Grid>
+
+						<div className={classes.tree} />
 					</div>
 				) : authUser === undefined ? (
 					<Grid container direction="column" justify="center" alignItems="center" style={{height: "100vh"}}>

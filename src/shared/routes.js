@@ -2,6 +2,7 @@ import Login from "./components/Login/Login-Student";
 import SignUp from "./components/SignUp";
 import StudentDash from "./components/StudentDash/StudentDash";
 import TextMobileStepper from "./components/SignUpStepper";
+import TeacherSuit from "./components/TeacherSuit/index";
 
 const routes = [
 	{
@@ -20,9 +21,9 @@ const routes = [
 		component: SignUp,
 	},
 	{
-		path: "/step",
+		path: "/teacher",
 		exact: true,
-		component: TextMobileStepper,
+		component: TeacherSuit,
 	},
 ];
 

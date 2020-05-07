@@ -77,9 +77,26 @@ function FireForm(props) {
 	var FBprovider = new firebase.auth.FacebookAuthProvider();
 	useEffect(() => {
 		props.firebase.auth.onAuthStateChanged((authUser) => {
-			authUser ? setTimeout(() => props.history.push("/profile"), 1000) : null;
+			authUser ? setTimeout(() => roleCheck(authUser.uid), 1000) : null;
 		});
 	});
+
+	const roleCheck = (uid) => {
+		props.firebase.db
+			.collection("users")
+			.doc(uid)
+			.get()
+			.then(function (doc) {
+				if (doc.exists) {
+					var role = doc.data().role;
+					if (role == "teacher") {
+						props.history.push("/teacher");
+					} else {
+						props.history.push("/profile");
+					}
+				}
+			});
+	};
 
 	var FbProvider = new firebase.auth.FacebookAuthProvider();
 	const onChange = (event) => {
@@ -98,10 +115,10 @@ function FireForm(props) {
 						console.log("Made it");
 						// This gives you a Google Access Token. You can use it to access the Google API.
 						var token = result.credential.accessToken;
-						// ...
 					}
 					// The signed-in user info.
 					var user = result.user;
+					props.firebase.providerUser(user.uid, user.displayName);
 				})
 				.catch(function (error) {
 					// Handle Errors here.
@@ -125,7 +142,7 @@ function FireForm(props) {
 					console.log(user.uid);
 					console.log(props.firebase);
 					props.firebase.providerUser(user.uid, user.displayName);
-					setTimeout(() => props.history.push("/profile"), 1000);
+
 					// ...
 				})
 				.catch(function (error) {
@@ -154,6 +171,9 @@ function FireForm(props) {
 					}
 					// The signed-in user info.
 					var user = result.user;
+					console.log("Hello from google auth");
+					props.firebase.providerUser(user.uid, user.displayName);
+					console.log("Hello from finished functions");
 				})
 				.catch(function (error) {
 					// Handle Errors here.
@@ -174,7 +194,7 @@ function FireForm(props) {
 					var token = result.credential.accessToken;
 					// The signed-in user info.
 					var user = result.user;
-					// ...
+					props.firebase.providerUser(user.uid, user.displayName);
 				})
 				.catch(function (error) {
 					// Handle Errors here.
@@ -196,7 +216,7 @@ function FireForm(props) {
 				props.firebase.db.collection("users").doc(user.user.uid).update({
 					lastLogin: new Date(),
 				});
-				props.history.push("/profile");
+				roleCheck(user.user.uid);
 			})
 			.catch((error) => {
 				let errorCode = error.code;
@@ -218,7 +238,7 @@ function FireForm(props) {
 
 			<div className={classes.container}>
 				<div className={classes.tree}>
-					<Tree />
+					<Tree hands={theme.palette.primary.main} leaves={theme.palette.secondary.main} />
 				</div>
 
 				<Grid container alignItems="center" style={{height: "100vh", minHeight: 700}}>
@@ -230,7 +250,7 @@ function FireForm(props) {
 									<Grid item xs={12}>
 										<Hidden mdUp>
 											<Typography variant="h4" color="textPrimary">
-												Hello friend,
+												Hello friends,
 											</Typography>
 										</Hidden>
 									</Grid>

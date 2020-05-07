@@ -28,8 +28,9 @@ const styles = {
 		marginRight: 20,
 	},
 	tree: {
-		width: 65,
-		height: 65,
+		width: 45,
+		height: 45,
+		flexGrow: 1,
 	},
 };
 
@@ -79,13 +80,14 @@ class MenuAppBar extends React.Component {
 			<AuthUserContext.Consumer>
 				{(authUser) => (
 					<div className={classes.root}>
-						<AppBar id="navbar" position="sticky" color="transparent">
+						<AppBar id="navbar" position="sticky" color="secondary">
 							<Toolbar>
-								<Button href="/">
+								<IconButton href="/profile">
 									<div className={classes.tree}>
-										<Tree />
+										<Tree hands="#0C47A1" leaves="#fc7d00" />
 									</div>
-								</Button>
+								</IconButton>
+								<div style={{flex: 1}}></div>
 								{authUser && (
 									<div>
 										<IconButton aria-owns={open ? "menu-appbar" : undefined} aria-haspopup="true" onClick={this.handleMenu} color="inherit">
@@ -96,20 +98,14 @@ class MenuAppBar extends React.Component {
 											anchorEl={anchorEl}
 											anchorOrigin={{
 												vertical: "top",
-												horizontal: "right",
+												horizontal: "left",
 											}}
 											transformOrigin={{
 												vertical: "top",
-												horizontal: "right",
+												horizontal: "left",
 											}}
 											open={open}
 											onClose={this.handleClose}>
-											<MenuItem onClick={this.handleClose}>Profile</MenuItem>
-											<br />
-											<Button href="/profile">
-												<MenuItem>My account</MenuItem>
-											</Button>
-											<br />
 											<MenuItem onClick={this.props.firebase.doSignOut}>Sign out</MenuItem>
 										</Menu>
 									</div>

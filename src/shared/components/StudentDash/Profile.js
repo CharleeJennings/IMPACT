@@ -6,12 +6,33 @@ import Typography from "@material-ui/core/Typography";
 import withAuthentication from "../../../server/firebase/Authenication/Authen";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
-import {makeStyles, useTheme} from "@material-ui/core/styles";
+import {makeStyles, useTheme, ThemeProvider} from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
 	card: {
 		height: 300,
+	},
+	points: {
+		[theme.breakpoints.up("md")]: {
+			width: 150,
+			height: 150,
+		},
+		width: 125,
+		height: 125,
+		borderRadius: 300,
+		backgroundColor: theme.palette.secondary.main,
+	},
+	content: {
+		[theme.breakpoints.up("md")]: {
+			paddingTop: 25,
+		},
+	},
+	name: {
+		[theme.breakpoints.up("md")]: {
+			fontSize: 25,
+		},
+		color: "white",
 	},
 }));
 
@@ -19,7 +40,7 @@ export function Points(props) {
 	const classes = useStyles();
 	const theme = useTheme();
 	return (
-		<div style={{width: 150, height: 150, backgroundColor: props.color, borderRadius: 300}}>
+		<div style={{}} className={classes.points}>
 			<Grid container alignItems="center" justify="center" style={{height: "100%"}}>
 				<Grid item xs={12}>
 					<Typography align="center" variant="h4">
@@ -67,10 +88,10 @@ function Profile(props) {
 			{data ? (
 				<Grid container direction="column" alignItems="center" justify="center">
 					<Grid item xs={12}>
-						<Points points={data.points} color={theme.palette.secondary.main} />
+						<Points points={data.points} />
 					</Grid>
-					<Grid item>
-						<Typography align="center" variant="h5" style={{color: "white"}}>
+					<Grid item className={classes.content}>
+						<Typography align="center" variant="h3" className={classes.name}>
 							{props.name}
 						</Typography>
 					</Grid>

@@ -228,13 +228,13 @@ function SignUp(props) {
 	return (
 		<div style={{height: "100vh"}}>
 			<div className={classes.tree}>
-				<Tree />
+				<Tree hands={theme.palette.primary.main} leaves={theme.palette.secondary.main} />
 			</div>
 			<Hidden smDown>
 				<Typography variant="h3" color="secondary" style={{opacity: "10%", fontSize: "3500%", position: "absolute", zIndex: -1, left: 0}}>
 					Faith
 				</Typography>
-				<Typography variant="h3" noWrap={true} color="primary" style={{opacity: "10%", fontSize: "3500%", position: "absolute", zIndex: -1, right: 0, top: 400, width: 1100, textOverflow: "clip"}}>
+				<Typography variant="h3" noWrap={true} color="primary" style={{opacity: "10%", fontSize: "3500%", position: "absolute", zIndex: -1, right: 0, bottom: 0, width: 1100, textOverflow: "clip"}}>
 					Love
 				</Typography>
 			</Hidden>
