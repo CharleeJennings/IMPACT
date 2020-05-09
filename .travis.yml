@@ -8,6 +8,7 @@ before_install:
   - npm i
 script:
   - npm test
+  - npm i -g firebase  -g firebase-tools
 deploy:
   provider: firebase
   token:
