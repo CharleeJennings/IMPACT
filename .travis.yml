@@ -7,7 +7,8 @@ cache:
 before_install:
   - npm i
 script:
-  - echo "Deploying"
+  - echo "Installing firebase tools"
   - npm i -g firebase  -g firebase-tools
 after_success:
+  - npm run-script build
   - firebase deploy --token $FIREBASE_TOKEN
