@@ -26,7 +26,7 @@ function TeacherSuit(props) {
 	return (
 		<div>
 			<div style={{backgroundColor: theme.palette.primary.main, position: "absolute", width: "100%", height: 300, zIndex: -1}}></div>
-			<Grid container direction="column" justify="center" alignItems="center" style={{width: "100vw"}} spacing={10}>
+			<Grid container direction="column" justify="center" alignItems="center" style={{width: "100vw", position: "relative", top: 235}} spacing={10}>
 				<Grid item xs={12} className={classes.students}>
 					<TopStudent edit />
 				</Grid>
