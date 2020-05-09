@@ -9,6 +9,6 @@ before_install:
 script:
   - echo "Installing firebase tools"
   - npm i -g firebase  -g firebase-tools
-after_success:
   - npm run-script build
+after_success:
   - firebase deploy --token $FIREBASE_TOKEN
