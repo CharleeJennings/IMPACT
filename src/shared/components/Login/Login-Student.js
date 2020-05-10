@@ -229,7 +229,6 @@ function FireForm(props) {
 	const classes = useStyles();
 	return (
 		<div style={{height: "100vh", minHeight: 100}}>
-			<div>{process.env.npm_package_version}</div>
 			<Hidden smDown>
 				<div className={classes.photo}>
 					<div className={classes.mask} />
