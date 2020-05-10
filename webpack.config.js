@@ -9,7 +9,7 @@ var browserConfig = {
 	entry: "./src/client/index.js",
 	output: {
 		path: path.resolve(__dirname, "public"),
-		filename: "bundle.js",
+		filename: "client.js",
 		publicPath: "/",
 	},
 	module: {
@@ -39,6 +39,7 @@ var browserConfig = {
 						options: {
 							bypassOnDebug: true, // webpack@1.x
 							disable: true, // webpack@2.x and newer
+							publicPath: "/images",
 						},
 					},
 				],
@@ -93,7 +94,7 @@ var serverConfig = {
 	externals: [nodeExternals()],
 	output: {
 		path: path.resolve(__dirname, "functions"),
-		filename: "index.js",
+		filename: "server.js",
 		publicPath: "/",
 	},
 	module: {
@@ -118,7 +119,6 @@ var serverConfig = {
 	plugins: [
 		new webpack.DefinePlugin({
 			__isBrowser__: "false",
-			window: "{}",
 		}),
 		new MiniCssExtractPlugin({
 			// Options similar to the same options in webpackOptions.output

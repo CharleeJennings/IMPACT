@@ -14,7 +14,7 @@ import FadeIn from "react-fade-in";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 import {Hidden} from "@material-ui/core";
-import Bg from "../../../../public/images/Tree.svg";
+import Bg from "../images/Tree.svg";
 
 const useStyles = makeStyles((theme) => ({
 	card: {

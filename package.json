@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"dev": "webpack -w & nodemon functions/index.js",
+		"dev": "webpack -w & nodemon functions/server.js",
 		"test": "jest --updateSnapshot",
 		"start": "webpack -d & firebase serve",
 		"build": "webpack --mode=production",
@@ -87,6 +87,7 @@
 		"isomorphic-loader": "^2.1.2",
 		"jss": "^9.8.7",
 		"material-ui-image": "^3.2.3",
+		"merge-release": "^4.0.21",
 		"mobile-device-detect": "^0.3.3",
 		"moment": "^2.24.0",
 		"mongoose": "^5.9.7",
