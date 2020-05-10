@@ -48,7 +48,7 @@ function renderFullPage(content, css, req, preloadedState) {
 			<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
       </head>
 	  <body>
-	  <script async src = '/client.js' defer> </script>
+	  <script async src = '/bundle.js' defer> </script>
         <div id="app">${content}</div>
       </body>
     </html>
