@@ -116,5 +116,11 @@
 		"serialize-javascript": "^1.9.1",
 		"social-media-icons-react": "^1.0.10",
 		"window-or-global": "^1.0.1"
+	},
+	"overrides": {
+		"node-forge": "1.4.1"
+	},
+	"engines": {
+		"npm": ">=8.3.0"
 	}
 }
